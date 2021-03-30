@@ -1,0 +1,17 @@
+name: envri-wp8-demonstrator-environment
+
+channels:
+  - conda-forge
+
+dependencies: 
+- jupyterlab
+- ipympl
+- python>=3.6
+- pip
+- pip:
+  - owslib
+  - geolinks
+  - ipywidgets
+  - ipydatetime
+  - ipyleaflet
+  - pandas
