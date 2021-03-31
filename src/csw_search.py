@@ -127,7 +127,7 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=10000):
             break
     csw.records.update(csw_records)
 
-def read_keywords(func, csw, url_endpoint, outputschema, pagesize=10, maxrecords=10):
+def read_keywords(func, csw, url_endpoint, outputschema, accepted_vocabularies, pagesize=10, maxrecords=10):
     """
     Extract keyword from an endpoint.
     Different function (fun) can be used to use a different outputschema.
@@ -136,10 +136,10 @@ def read_keywords(func, csw, url_endpoint, outputschema, pagesize=10, maxrecords
     nextrecord = getattr(csw, "results", 1)
     startposition = 0
     while nextrecord != 0:
-        csw.getrecords2(startposition=startposition,maxrecords=pagesize, outputschema=outputschema)
+        csw.getrecords2(startposition=startposition,maxrecords=pagesize, outputschema=outputschema, esn='full')
         #print(startposition)
         for rec in csw.records:
-            keywords = keywords + func(csw.records[rec], url_endpoint, outputschema)
+            keywords = keywords + func(csw.records[rec], url_endpoint, outputschema, accepted_vocabularies)
         if csw.results["nextrecord"] == 0:
             break
         startposition += pagesize + 1  # Last one is included.
@@ -147,26 +147,27 @@ def read_keywords(func, csw, url_endpoint, outputschema, pagesize=10, maxrecords
             break
     return keywords
 
-def get_csw_keywords_gmd(record, url_endpoint, outputschema):
+def get_csw_keywords_gmd(record, url_endpoint, outputschema, accepted_vocabularies):
     """
     Extract keyword from an endpoint using gmd schema.
     """
     keywords = []
     for ii in record.identificationinfo:
+        #print(str(vars(ii)))
         if ii.keywords2 == None or len(ii.keywords) == 0:
-            print("-- no keywords for the record: "  + url_endpoint + "?SERVICE=CSW&VERSION=2.0.2&outputSchema=" + outputschema + "&REQUEST=GetRecordById&ID=" + record.identifier)
+            print("-- no keywords for the record: "  + url_endpoint + "?SERVICE=CSW&VERSION=2.0.2&outputSchema=" + outputschema + "&elementsetname=full&REQUEST=GetRecordById&ID=" + record.identifier)
         else:
-            for jj in ii.keywords2:
+            presence_keywords = False
+            for jj in ii.keywords2: # for each set of keywords
                 for kk in ii.keywords2:
-                    if kk.keywords == None or len(kk.keywords) == 0:
-                        print("-- no keywords for the record: " + url_endpoint + "?SERVICE=CSW&VERSION=2.0.2&outputSchema=" + outputschema + "&REQUEST=GetRecordById&ID=" + record.identifier)
-                    else:
+                    if kk.keywords != None and len(kk.keywords) > 0 and kk.thesaurus != None and any(s in kk.thesaurus['title'] for s in accepted_vocabularies):#"GCMD" in kk.thesaurus['title']:
                         keywords = keywords + kk.keywords
-                        if kk.thesaurus == None:
-                            print("-- no thesaurus name for the record: "  + url_endpoint + "?SERVICE=CSW&VERSION=2.0.2&outputSchema=" + outputschema + "&REQUEST=GetRecordById&ID=" + record.identifier)       
+                        presence_keywords = True
+            if not presence_keywords:
+                print("-- keywords or thesaurus not provided for the record: "  + url_endpoint + "?SERVICE=CSW&VERSION=2.0.2&outputSchema=" + outputschema + "&elementsetname=full&REQUEST=GetRecordById&ID=" + record.identifier)
     return keywords
 
-def get_csw_keywords_default(record, url_endpoint, outputschema):
+def get_csw_keywords_default(record, url_endpoint, outputschema, accepted_vocabularies):
     """
     Extract keyword from an endpoint using default csw schema.
     """
@@ -175,22 +176,23 @@ def get_csw_keywords_default(record, url_endpoint, outputschema):
     keywords = [ x for x in keywords if ">" in x ] # filter for keeping only GCMD terms (temporary).
     return keywords
 
-def get_csw_keywords(endpoints):
+def get_csw_keywords(endpoints, accepted_vocabularies):
     """
     Extract keyword from a list of endpoints. gmd schema first and csw if no keywords found.
     """
     keywords = []
     for endpoint in endpoints:
         csw = CatalogueServiceWeb(endpoints[endpoint])
-        ret = read_keywords(get_csw_keywords_gmd, csw, endpoints[endpoint], "http://www.isotc211.org/2005/gmd")
+        ret = read_keywords(get_csw_keywords_gmd, csw, endpoints[endpoint], "http://www.isotc211.org/2005/gmd", accepted_vocabularies)
         if ret != None and len(ret) > 0:
             keywords = keywords + ret
         else:
-            ret = read_keywords(get_csw_keywords_default, csw, endpoints[endpoint], "http://www.opengis.net/cat/csw/2.0.2")
+            ret = read_keywords(get_csw_keywords_default, csw, endpoints[endpoint], "http://www.opengis.net/cat/csw/2.0.2", accepted_vocabularies)
             if ret != None and len(ret) > 0:
                 keywords = keywords + ret
     if len(keywords) > 0:
         keywords = list(dict.fromkeys(keywords))
+        #keywords = [ x.capitalize() for x in keywords ] 
     list.sort(keywords)
     return keywords
 
