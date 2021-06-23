@@ -28,7 +28,7 @@ def reverse_mapping(mapping):
     return ret
 MAPPING_IAGOS_ECV=reverse_mapping(MAPPING_ECV_IAGOS)
 
-def get_list_stations():
+def get_list_platforms():
     try:
         response = requests.get(REST_URL_STATIONS)
         response.raise_for_status()
@@ -67,6 +67,6 @@ def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
     return
     
 if __name__ == "__main__":
-    print(get_list_stations())
+    print(get_list_platforms())
     print(get_list_variables())
 
