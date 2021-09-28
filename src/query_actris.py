@@ -36,25 +36,19 @@ def get_list_variables():
     variables_demonstrator = []
 
     for v in response.json():
-
         for k, var_list in MAPPING_ECV2ACTRIS.items():
 
-            for v in var_list:
-
-                if k == 'Cloud Properties':
-                    variables_demonstrator.append(
-                        {'variable_name': v, 'ECV_name': ['Cloud Properties']})
-
-                elif k == 'Aerosol Properties':
-                    variables_demonstrator.append(
-                        {'variable_name': v, 'ECV_name': ['Aerosol Properties']})
-
-                elif k == 'Precursors':
-                    variables_demonstrator.append(
-                        {'variable_name': v, 'ECV_name': ['Precursors']})
-
-                else:
-                    pass
+            if k == 'Cloud Properties' and v['attribute_type'] in var_list:
+                variables_demonstrator.append(
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Cloud Properties']})
+            elif k == 'Aerosol Properties' and v['attribute_type'] in var_list:
+                variables_demonstrator.append(
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Aerosol Properties']})
+            elif k == 'Precursors' and v['attribute_type'] in var_list:
+                variables_demonstrator.append(
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Precursors']})
+            else:
+                pass
 
     return variables_demonstrator
 
