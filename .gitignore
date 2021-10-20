@@ -1,2 +1,5 @@
 /.project
 /.pydevproject
+.ipynb_checkpoints
+.pylint.d
+__pycache__
