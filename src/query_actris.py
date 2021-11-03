@@ -3,9 +3,11 @@ import xarray as xr
 
 # Use this mapping for the mapping, to reduce the size
 MAPPING_ECV2ACTRIS = {
-    'Cloud Properties': ['cloud.aerosol.target.classification', 'cloud.fraction', 'cloud.mask'],
-    'Aerosol Properties': ['aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient', 'aerosol.backscatter.coefficient.hemispheric', 'aerosol.backscatter.ratio', 'aerosol.depolarisation.coefficient', 'aerosol.depolarisation.ratio', 'aerosol.extinction.coefficient', 'aerosol.extinction.ratio', 'aerosol.extinction.to.backscatter.ratio', 'aerosol.optical.depth', 'aerosol.optical.depth.550', 'aerosol.rayleigh.backscatter', 'aerosol.scattering.coefficient', 'particle.number.concentration', 'particle.number.size.distribution', 'cloud.condensation.nuclei.number.concentration', 'elemental.carbon', 'organic.carbon.concentration', 'organic.mass.concentration', 'pm1.concentration', 'pm10.concentration', 'pm2.5.concentration', 'pm2.5-&gt;pm10.concentration', 'total.carbon.concentration'],
-    'Precursors': ['ethane', 'acetonitrile', 'benzene', 'butanales', 'butanone', 'butenes', 'cis-2-butene', 'cis-2-pentene', 'cyclo-hexane', 'cyclo-pentene', 'C9-alkylbenzenes', 'ethanal', 'NO2.concentration', 'NOx.concentration', 'ethanedial', 'ethene', 'ethylbenzene', 'ethyne', 'hexanal', 'isoheptanes', 'isohexanes', 'isoprene', 'methanal', 'methanol', 'methyl-cyclohexane', 'methyl-cyclopentane', 'monoterpenes', 'm-p-xylene', 'MVK_MACR_crotonaldehyde', 'n-butane', 'n-heptane', 'n-hexanal', 'n-hexane', 'n-nonane', 'NO.concentration', 'n-octane', 'n-pentane', 'o-xylene', 'pentanal', 'pentenes', 'propanal', 'propane', 'propanone', 'propene', 'propyne', 'toluene', 'trans-2-butene', 'trans-2-pentene', 'valeraldehyde.o-tolualdehyde', '1-butene', '1-butyne', '1-hexene', '1-pentene', '1-2-3-trimethylbenzene', '1-2-4-trimethylbenzene', '1-3-butadiene', '1-3-5-trimethylbenzene', '2-methylbutane', '2-methylhexane', '2-methylpentane', '2-methylpropane', '2-methylpropenal', '2-methylpropene', '2-oxopropanal', '2-propenal', '2-2-dimethylbutane', '2-2-dimethylpentane', '2-2-dimethylpropane', '2-2-3-trimethylbutane', '2-2-4-trimethylpentane', '2-3-dimethylbutane', '2-3-dimethylpentane', '2-4-dimethylpentane', '3-buten-2-one', '3-methylheptane', '3-methylpentane', '3-methyl-1-butene', '3-3-dimethylpentane']
+    #'Cloud Properties': ['cloud.aerosol.target.classification', 'cloud.fraction', 'cloud.mask'],
+    'Aerosol Optical Properties': ['aerosol.absorption.coefficient','aerosol.backscatter.coefficient','aerosol.backscatter.coefficient.hemispheric','aerosol.backscatter.ratio','aerosol.depolarisation.coefficient','aerosol.depolarisation.ratio','aerosol.extinction.coefficient','aerosol.extinction.ratio','aerosol.extinction.to.backscatter.ratio','aerosol.optical.depth','aerosol.optical.depth.550','aerosol.rayleigh.backscatter','aerosol.scattering.coefficient'],
+    'Aerosol Chemical Properties': ['elemental.carbon','organic.carbon.concentration','organic.mass.concentration','total.carbon.concentration'],
+    'Aerosol Physical Properties': ['particle.number.concentration','particle.number.size.distribution','pm10.concentration','pm1.concentration','pm2.5.concentration','pm2.5-&gt;pm10.concentration'],
+    #'Precursors': ['ethane', 'acetonitrile', 'benzene', 'butanales', 'butanone', 'butenes', 'cis-2-butene', 'cis-2-pentene', 'cyclo-hexane', 'cyclo-pentene', 'C9-alkylbenzenes', 'ethanal', 'NO2.concentration', 'NOx.concentration', 'ethanedial', 'ethene', 'ethylbenzene', 'ethyne', 'hexanal', 'isoheptanes', 'isohexanes', 'isoprene', 'methanal', 'methanol', 'methyl-cyclohexane', 'methyl-cyclopentane', 'monoterpenes', 'm-p-xylene', 'MVK_MACR_crotonaldehyde', 'n-butane', 'n-heptane', 'n-hexanal', 'n-hexane', 'n-nonane', 'NO.concentration', 'n-octane', 'n-pentane', 'o-xylene', 'pentanal', 'pentenes', 'propanal', 'propane', 'propanone', 'propene', 'propyne', 'toluene', 'trans-2-butene', 'trans-2-pentene', 'valeraldehyde.o-tolualdehyde', '1-butene', '1-butyne', '1-hexene', '1-pentene', '1-2-3-trimethylbenzene', '1-2-4-trimethylbenzene', '1-3-butadiene', '1-3-5-trimethylbenzene', '2-methylbutane', '2-methylhexane', '2-methylpentane', '2-methylpropane', '2-methylpropenal', '2-methylpropene', '2-oxopropanal', '2-propenal', '2-2-dimethylbutane', '2-2-dimethylpentane', '2-2-dimethylpropane', '2-2-3-trimethylbutane', '2-2-4-trimethylpentane', '2-3-dimethylbutane', '2-3-dimethylpentane', '2-4-dimethylpentane', '3-buten-2-one', '3-methylheptane', '3-methylpentane', '3-methyl-1-butene', '3-3-dimethylpentane']
 }
 
 
@@ -37,13 +39,18 @@ def get_list_variables():
 
     for v in response.json():
         for k, var_list in MAPPING_ECV2ACTRIS.items():
-
             if k == 'Cloud Properties' and v['attribute_type'] in var_list:
                 variables_demonstrator.append(
                     {'variable_name': v['attribute_type'], 'ECV_name': ['Cloud Properties']})
-            elif k == 'Aerosol Properties' and v['attribute_type'] in var_list:
+            elif k == 'Aerosol Optical Properties' and v['attribute_type'] in var_list:
                 variables_demonstrator.append(
-                    {'variable_name': v['attribute_type'], 'ECV_name': ['Aerosol Properties']})
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Aerosol Optical Properties']})
+            elif k == 'Aerosol Chemical Properties' and v['attribute_type'] in var_list:
+                variables_demonstrator.append(
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Aerosol Chemical Properties']})
+            elif k == 'Aerosol Physical Properties' and v['attribute_type'] in var_list:
+                variables_demonstrator.append(
+                    {'variable_name': v['attribute_type'], 'ECV_name': ['Aerosol Physical Properties']})
             elif k == 'Precursors' and v['attribute_type'] in var_list:
                 variables_demonstrator.append(
                     {'variable_name': v['attribute_type'], 'ECV_name': ['Precursors']})
@@ -63,8 +70,11 @@ def query_datasets(variables, temporal_extent, spatial_extent):
 
             actris_variable_list.extend(MAPPING_ECV2ACTRIS[v])
 
-        temporal_extent = [start_time, end_time]
-        spatial_extent = [lon0, lat0, lon1, lat1]
+
+        start_time,end_time = temporal_extent[0],temporal_extent[1]
+        #temporal_extent = [start_time, end_time]
+        lon0, lat0, lon1, lat1 = spatial_extent[0],spatial_extent[1],spatial_extent[2],spatial_extent[3],
+        #spatial_extent = [lon0, lat0, lon1, lat1]
 
         dataset_endpoints = []
 
@@ -99,7 +109,7 @@ def query_datasets(variables, temporal_extent, spatial_extent):
         return dataset_endpoints
 
     except BaseException:
-        return "Variables must be one of the following: 'Aerosol Properties','Precursors','Cloud Properties'"
+        return "Variables must be one of the following: 'Aerosol Optical Properties','Aerosol Chemical Properties','Aerosol Physical Properties'"
 
 
 def read_dataset(url, variables):
