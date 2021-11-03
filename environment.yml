@@ -16,3 +16,9 @@ dependencies:
   - ipyleaflet
   - pandas
   - icoscp
+  - folium
+  - icoscp
+  - xarray
+  - scipy
+  - ipycache
+

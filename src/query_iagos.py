@@ -100,7 +100,7 @@ def query_datasets(variables_list, temporal_extent, spatial_extent): #TODO : set
         print(f'Other error occurred: {err}')
 
 def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
-    response = requests.get(REST_URL_KEY + "/damien.boulanger@obs-mip.fr") # setup ENVRI account
+    response = requests.get(REST_URL_KEY + "/tech@envri-fair.eu") # setup ENVRI account
     key=response.text
     results = requests.get(dataset_id + "?api_key=" + key + "&format=nc")
     with open('/tmp/fic.nc', 'wb') as f:
@@ -115,7 +115,7 @@ def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
     
 if __name__ == "__main__":
     #print(get_list_platforms())
-    print(get_list_variables())
+    #print(get_list_variables())
     #print(query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]))
     for dataset in query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]):
         print(dataset)
