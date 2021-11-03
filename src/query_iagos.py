@@ -1,12 +1,12 @@
 import requests
 from requests.exceptions import HTTPError
-import xarray as xr 
+import xarray as xr   
 
 REST_URL_STATIONS="http://iagos-data.fr/services/rest/airports/list?format=json&level=2"
 REST_URL_VARIABLES="http://iagos-data.fr/services/rest/parameters/list?format=json"
 REST_URL_SEARCH="http://iagos-data.fr/services/rest/tracks/list?level=2"
 REST_URL_DOWNLOAD="http://iagos-data.fr/services/rest/download/timeseries"
-REST_URL_KEY="XXX"
+REST_URL_KEY="http://iagos-data.fr/services/rest/auth"
 STATIC_PARAMETERS=["latitude", "longitude", "air_pressure", "barometric_altitude"]
 MAPPING_ECV_IAGOS={
     "Temperature (near surface)" : [ "air_temperature" ],
@@ -78,8 +78,9 @@ def get_list_variables():
 def query_datasets(variables_list, temporal_extent, spatial_extent): #TODO : setup THREDDS server
     parameters = []
     for param in variables_list:
-        for p in MAPPING_ECV_IAGOS[param]:
-            parameters.append(MAPPING_CF_IAGOS[p])
+        if param in MAPPING_ECV_IAGOS:
+            for p in MAPPING_ECV_IAGOS[param]:
+                    parameters.append(MAPPING_CF_IAGOS[p])
     fromm=temporal_extent[0]
     to=temporal_extent[1]
     bbox=','.join(map(str, spatial_extent))
@@ -114,9 +115,10 @@ def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
     
 if __name__ == "__main__":
     #print(get_list_platforms())
-    #print(get_list_variables())
+    print(get_list_variables())
     #print(query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]))
     for dataset in query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]):
+        print(dataset)
         array = read_dataset(dataset, ['mole_fraction_of_carbon_monoxide_in_air'], None, None)
         print(array['CO_PM'][0:10])
 
