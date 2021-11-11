@@ -65,15 +65,15 @@ def get_list_variables():
     variables : LIST[dicts]
     """
 
-    variables = [{'AP':  ['Pressure (surface)', 'Pressure', 'ap']},
-                 {'WD':  ['Surface Wind Speed and direction', 'wd']},
-                 {'WS':  ['Surface Wind Speed and direction', 'ws']},
-                 {'AT':  ['Temperature (near surface)', 'Temperature', 'at']},
-                 {'RH':  ['Water Vapour (surface)','Water Vapour (Relative Humidity)','rh']},
-                 {'co2': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CO2', 'co2']},
-                 {'co':  ['Carbon Dioxide, Methane and other Greenhouse gases','co']},
-                 {'ch4': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CH4','ch4']},
-                 {'n2o': ['Carbon Dioxide, Methane and other Greenhouse gases','n2o']}
+    variables = [{'variable_name':'AP', 'ECV_name': ['Pressure (surface)', 'Pressure', 'ap']},
+                 {'variable_name':'WD', 'ECV_name': ['Surface Wind Speed and direction', 'wd']},
+                 {'variable_name':'WS', 'ECV_name': ['Surface Wind Speed and direction', 'ws']},
+                 {'variable_name':'AT', 'ECV_name': ['Temperature (near surface)', 'Temperature', 'at']},
+                 {'variable_name':'RH', 'ECV_name': ['Water Vapour (surface)','Water Vapour (Relative Humidity)','rh']},
+                 {'variable_name':'co2','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CO2', 'co2']},
+                 {'variable_name':'co', 'ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','co']},
+                 {'variable_name':'ch4','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CH4','ch4']},
+                 {'variable_name':'n2o','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','n2o']}
                  ]
     return variables
 
@@ -85,7 +85,7 @@ def ecv_icos_map():
     
     return reverse
     
-def __get_spec(var):
+def __get_spec(variable_name):
     """
     Return a list of Variables from ICOS for the moment this is a
     fixed dictionary, but could / should be dynamically queried
@@ -95,6 +95,8 @@ def __get_spec(var):
     variables : LIST[dicts]
     """
    
+    # make sure variable_name is lower case
+    variable_name = variable_name.lower()
     specs = {'ap':  'http://meta.icos-cp.eu/resources/cpmeta/atcMtoL2DataObject',
              'wd':  'http://meta.icos-cp.eu/resources/cpmeta/atcMtoL2DataObject',
              'ws':  'http://meta.icos-cp.eu/resources/cpmeta/atcMtoL2DataObject',
@@ -105,8 +107,8 @@ def __get_spec(var):
              'ch4': 'http://meta.icos-cp.eu/resources/cpmeta/atcCh4L2DataObject',
              'n2o': 'http://meta.icos-cp.eu/resources/cpmeta/atcN2oL2DataObject'
              }
-    if var.lower() in specs.keys():
-        return specs[var]
+    if variable_name in specs.keys():
+        return specs[variable_name]
     else:
         return ''
 
@@ -152,11 +154,10 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
     
     # start filtering according to parameters
     selected_var=[]    
-    for vv in get_list_variables():
-        key = list(vv.keys())[0]
+    for vv in get_list_variables():        
         for v in variables:
-            if v in vv[key]:
-                selected_var.append(key.lower())
+            if v in vv['ECV_name']:
+                selected_var.append(vv['variable_name'])
 
     # make sure there are no duplicates
     selected_var = list(set(selected_var))
@@ -234,7 +235,7 @@ if __name__ == "__main__":
     #print(get_list_platforms())
     #print(get_list_variables())
     #print(query_datasets(variables=['co2','Pressure (surface)'],temporal=['2018-01-01','2018-12-31']))
-    print(query_datasets(['Pressure (surface)'], ['2018-01-01T03:00:00','2021-12-31T24:00:00'],[10, 40, 23, 60]))
+    #print(query_datasets(['Pressure (surface)'], ['2018-01-01T03:00:00','2021-12-31T24:00:00'],[10, 40, 23, 60]))
     pids = query_datasets(variables=['co2', 'ws','Carbon Dioxide, Methane and other Greenhouse gases'], temporal= ['2018-01-01T03:00:00','2021-12-31T24:00:00'], spatial = [10, 40, 23, 60])
     print(pids)
     data = read_dataset(pids[0])
