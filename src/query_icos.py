@@ -204,7 +204,6 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
     
     # filter temporal
     if len(temporal) == 2:
-        #df = df[(df.timeStart >= temporal[0]) | (df.timeEnd <= temporal[1])]
         df = df[(df.timeStart <= temporal[1]) & (df.timeEnd >= temporal[0])]
             
     # filter spatial
