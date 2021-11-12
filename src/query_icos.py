@@ -70,10 +70,10 @@ def get_list_variables():
                  {'variable_name':'WS', 'ECV_name': ['Surface Wind Speed and direction', 'ws']},
                  {'variable_name':'AT', 'ECV_name': ['Temperature (near surface)', 'Temperature', 'at']},
                  {'variable_name':'RH', 'ECV_name': ['Water Vapour (surface)','Water Vapour (Relative Humidity)','rh']},
-                 {'variable_name':'co2','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CO2', 'co2']},
-                 {'variable_name':'co', 'ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','co']},
-                 {'variable_name':'ch4','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CH4','ch4']},
-                 {'variable_name':'n2o','ECV_name': ['Carbon Dioxide, Methane and other Greenhouse gases','n2o']}
+                 {'variable_name':'co2','ECV_name': ['Carbon Dioxide','Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CO2', 'co2']},
+                 {'variable_name':'co', 'ECV_name': ['Carbon Monoxide','Carbon Dioxide, Methane and other Greenhouse gases','co']},
+                 {'variable_name':'ch4','ECV_name': ['Methane', 'Carbon Dioxide, Methane and other Greenhouse gases','Tropospheric CH4','ch4']},
+                 {'variable_name':'n2o','ECV_name': ['Nitrous Oxide','Carbon Dioxide, Methane and other Greenhouse gases','n2o']}
                  ]
     return variables
 
@@ -112,6 +112,23 @@ def __get_spec(variable_name):
     else:
         return ''
 
+def __get_ecv(spec):
+    
+    ecvar = {'http://meta.icos-cp.eu/resources/cpmeta/atcMtoL2DataObject':['Pressure (surface)', \
+                            'Surface Wind Speed and direction',\
+                            'Temperature (near surface)', \
+                            'Water Vapour (surface)'],
+             'http://meta.icos-cp.eu/resources/cpmeta/atcCo2L2DataObject':['Carbon Dioxide'],
+             'http://meta.icos-cp.eu/resources/cpmeta/atcCoL2DataObject':['Carbon Monoxide'],
+             'http://meta.icos-cp.eu/resources/cpmeta/atcCh4L2DataObject':['Methane'],
+             'http://meta.icos-cp.eu/resources/cpmeta/atcN2oL2DataObject':['Nitrous Oxide']
+             }
+
+    if spec in ecvar.keys():
+        return ecvar[spec]
+    else:
+        return ''
+    
 def query_datasets(variables=[], temporal=[], spatial=[]):
     """
     return identifiers for datasets constraint by input parameters.
@@ -133,18 +150,26 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
         lat lon must be convertible to float. The bounding box is of format
         bottom left, top right corner.
         
+    
+        
     Returns
     -------
-    LIST[URI], where URI is an ICOS specific assembly inlcuding the PID
-    The URI is persistent landing page for the dataset. If no results
-    an empty list is returned
+    LIST[DICT]
+    Where DICT is of form {title:’’, urls:[{url:’’, type:”}], ecv_variables:[], time_period:[start, end], platform_id:””}
+    
+    title: title of the dataset
+    urls: list of urls for the dataset. Can include link to a landing page, link to the data file, opendap link
+    url.type: type of the url. Should be in list: landing_page, data_file, opendap
+    ecv_variables: list of ecv variables included in the dataset
+    time_period: time period covered by the dataset
+    platform_id: id of the station (i.e. identical to short_name of the platform return by method get_list_platforms())
+
+    If there ae no results an empty list is returned
     """
     stn = station.getIdList()
     stn = stn[stn['theme']=='AS']
     dtypes = ['str','str','str','str','float','float','float','str', 'str']
     dtype=dict(zip(stn.columns.tolist(), dtypes))
-    stn.astype(dtype)   
-    
 
     # get all datasets and convert dtype    
     dataset = __sparql_data()
@@ -154,26 +179,34 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
     
     # start filtering according to parameters
     selected_var=[]    
-    for vv in get_list_variables():        
+    for vv in get_list_variables():
+        #convert all to lowercase, for more resilience
+        ecv = [v.lower() for v in vv['ECV_name']]
         for v in variables:
-            if v in vv['ECV_name']:
+            if v.lower() in ecv:
                 selected_var.append(vv['variable_name'])
 
     # make sure there are no duplicates
     selected_var = list(set(selected_var))
     
     df = pd.DataFrame()
-    # get variables
+
+    # filter provided variables from all datasets
     for v in selected_var:
-        data = dataset['spec'] == __get_spec(v)
-        df = df.append(dataset[data])
+        data = dataset[dataset['spec'] == __get_spec(v)]
+        df = df.append(data)
+            
     if df.empty:
         return []
     
+    # make sure there are no duplicates (meteo variables are in the same file)
+    df = df.drop_duplicates(subset=['dobj'])    
+    
     # filter temporal
     if len(temporal) == 2:
-        df = df[(df.timeStart >= temporal[0]) | (df.timeEnd <= temporal[1])]
-    
+        #df = df[(df.timeStart >= temporal[0]) | (df.timeEnd <= temporal[1])]
+        df = df[(df.timeStart <= temporal[1]) & (df.timeEnd >= temporal[0])]
+            
     # filter spatial
     if len(spatial) == 4:
         stlist = []
@@ -184,11 +217,33 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
                float(a.lon) <= spatial[2] and \
                float(a.lat) >= spatial[1] and \
                float(a.lat) <= spatial[3]:
-                  stlist.append(a.uri.values[0])
+                  stlist.append(a.uri.values[0])                  
         if stlist:
             df = df[df.station.isin(stlist)]
-            
-    return df['dobj'].tolist()
+
+    if df.empty:
+        return []  
+    else:
+        df = df.reset_index(drop=True)
+        
+    # transfrom pandas dataframe to dict to conform for envri
+    # fair demonstrator
+    
+    # add platform_id
+    ids = df.station.to_list()
+    ids = [s[-3:] for s in ids]
+    df['platform_id'] = ids
+    
+    outlist = []
+    for r in df.iterrows():
+        d= {'title':r[1].fileName,
+            'urls':[{'url':r[1].dobj, 'type':'landing_page'}],
+            'ecv_variables': __get_ecv(r[1].spec),
+            'time_period':[r[1].timeStart, r[1].timeEnd],
+            'platform_id':r[1].platform_id
+            }
+        outlist.append(d)    
+    return outlist
     
 
 def __sparql_data():    
@@ -232,12 +287,12 @@ def read_dataset(pid):
     
 if __name__ == "__main__":
     
-    #print(get_list_platforms())
+    #a= get_list_platforms()
     #print(get_list_variables())
-    #print(query_datasets(variables=['co2','Pressure (surface)'],temporal=['2018-01-01','2018-12-31']))
+    b = query_datasets(variables=['temperature','n2o'],temporal=['2016-01-01','2016-04-31'])
     #print(query_datasets(['Pressure (surface)'], ['2018-01-01T03:00:00','2021-12-31T24:00:00'],[10, 40, 23, 60]))
-    pids = query_datasets(variables=['co2', 'ws','Carbon Dioxide, Methane and other Greenhouse gases'], temporal= ['2018-01-01T03:00:00','2021-12-31T24:00:00'], spatial = [10, 40, 23, 60])
-    print(pids)
-    data = read_dataset(pids[0])
-    print(data.head())
+    #pids = query_datasets(variables=['co2', 'ws','Carbon Dioxide, Methane and other Greenhouse gases'], temporal= ['2018-01-01T03:00:00','2021-12-31T24:00:00'], spatial = [10, 40, 23, 60])
+    #print(pids)
+    #data = read_dataset(pids[0])
+    #print(data.head())
     
