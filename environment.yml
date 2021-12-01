@@ -21,4 +21,4 @@ dependencies:
   - xarray
   - scipy
   - ipycache
-
+  - netCDF4
