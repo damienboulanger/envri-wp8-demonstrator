@@ -5,35 +5,34 @@ import xarray as xr
 
 #query csw
 def call_sios_csw():
-    #query for datasets with specific variables of interest for the demonstrator
-    cf_standard_names = ['surface_air_pressure', 
-                         'wind_speed',
-                         'wind_from_direction', 
-                         'air_temperature', 
-                         'relative_humidity']
-        
-    resources = []
-    i = 0 
-    query_string = ''
-    while i < len(cf_standard_names):
-        query_string += '&q='+ cf_standard_names[i]
-        i += 1
-    
-    response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?'+query_string+'&f=json')
+    csw_info = []
+    answer = False 
+    while not answer: 
+        response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?q=Norwegian%20weather%20station&f=json')
+        #print('response', response.status_code)
+        if response.status_code != 500:
+            answer = True
+        else: 
+            pass
     tot_records = response.json()['numberMatched']
     n_records = response.json()['numberReturned']
-    resume = round(tot_records/n_records)
+    pages = round(tot_records/n_records)
+    #print(tot_records, n_records, pages)
     resources = []
-    for i in range(0, resume*10,10):
-        response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?'+query_string+'&startindex='+str(i)+'&f=json')
+    for index in range(0, pages*n_records,n_records):
+        response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?q=Norwegian%20weather%20station&startindex='+str(index)+'&f=json')
         for element in response.json()['features']:
-            for url in element['associations']:
-                if url['type'] == 'OPENDAP:OPENDAP':
-                    request_response = requests.head(url['href']+'.html')
-                    status_code = request_response.status_code
-                    if status_code == 200:
-                        resources.append(url['href'])
-    return(resources)
+            urls = element['associations']
+            opendap = next(item for item in urls if item['type'] == 'OPENDAP:OPENDAP')
+            download = next(item for item in urls if item['type'] == 'download')
+            csw_info.append({'title' : element['properties']['title'], 
+                             'id': element['id'], 
+                             'urls' : {'landing page' : 'https://sios-svalbard.org/metsis/metadata/'+element['id'], 
+                                       'opendap' : opendap['href'],
+                                       'download' : download['href']}})
+
+    return(csw_info)
+
 
 def sios_dataset_info(url):
     #cf standard name to ECV mapping
@@ -71,27 +70,27 @@ def sios_dataset_info(url):
                 variables.append({'variable_name': varname, 'ECV_name': [mapping[da.attrs['standard_name']]]})
         return dict(url=url, station_info=station_info, variables=variables, temporal_extent=temporal_extent, spatial_extent=spatial_extent)
     except:
-        print("no dataset global attributes found for: ", url)
+        #print("no dataset global attributes found for: ", url)
         return
-
 
 # all stations info
 def get_list_platforms():
     platform_info = []
     resources = call_sios_csw()
     for i in resources:
-        dsinfo = sios_dataset_info(i)
-        if dsinfo != None:
-            platform_info.append(dsinfo['station_info'])
+        if i['urls']['opendap']:
+            dsinfo = sios_dataset_info(i['urls']['opendap'])
+            if dsinfo != None:
+                platform_info.append(dsinfo['station_info'])
     return (platform_info)
 
-def get_list_variables():
-     
+
+def get_list_variables():    
     variables = []
     mapped_variables = []
     resources = call_sios_csw()
     for i in resources:
-        dsinfo = sios_dataset_info(i)
+        dsinfo = sios_dataset_info(i['urls']['opendap'])
         if dsinfo != None:
             for vdict in dsinfo['variables']:
                 if vdict['variable_name'] not in mapped_variables:
@@ -102,22 +101,35 @@ def get_list_variables():
 # query datasets with filters
 def query_datasets(variables_list, temporal_extent, spatial_extent):
     #info = [{uri:URI, variables: [variables], time:[time], bbox:[bbox]}]
-    list_identifiers = []
-    resources = call_sios_csw()    
+    filtered_dataset_info = []
+    resources = call_sios_csw()
+    start = str(temporal_extent[0])
+    stop = str(temporal_extent[1])
     for i in resources:
-        dsinfo = sios_dataset_info(i)
+        dsinfo = sios_dataset_info(i['urls']['opendap'])
         if dsinfo != None:
             #start_ds < end and end_ds > start
+            if temporal_extent[0] == None:
+                start = dsinfo['temporal_extent'][0]
+            if temporal_extent[1] == None:
+                stop = dsinfo['temporal_extent'][1]
             #point location inclued in box
-            if ((dsinfo['temporal_extent'][0] < temporal_extent[1] 
-                    and dsinfo['temporal_extent'][1] > temporal_extent[0]) 
+            if ((dsinfo['temporal_extent'][0] <= stop 
+                    and dsinfo['temporal_extent'][1] >= start) 
                     and((spatial_extent[0] < dsinfo['spatial_extent'][0] < spatial_extent[2]) 
                     and (spatial_extent[1] < dsinfo['spatial_extent'][1] < spatial_extent[3]))):
+                variables = []
                 for ds_v in dsinfo['variables']:
+                    variables.append(ds_v['ECV_name'][0])
                     if ds_v['ECV_name'][0] in variables_list:
-                        list_identifiers.append(dsinfo['url'])
-                        break
-    return(list_identifiers)
+                #        list_identifiers.append(dsinfo['url'])
+                #        break
+                        filtered_dataset_info.append({'title': i['title'], 
+                                      'urls' : i['urls'], 
+                                      'ecv_variables' : variables,
+                                      'time_period' : [dsinfo['temporal_extent'][0],dsinfo['temporal_extent'][1]],
+                                      'platform_id' : dsinfo['station_info']['short_name']})
+    return(filtered_dataset_info)
 
 #query_datasets(['ECV variable'], ['start date','end date'], ['lon0', 'lat0', 'lon1', 'lat1'])
 #query_datasets(['Pressure (surface)','Surface Wind Speed and direction'], ['1800-03-01T03:00:00','2000-01-01T03:00:00'], [0, 78, 180, 90])
