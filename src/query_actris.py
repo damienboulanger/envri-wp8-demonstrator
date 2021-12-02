@@ -2,9 +2,9 @@ import requests
 import xarray as xr
 
 MAPPING_ECV2ACTRIS = {
-    'Aerosol Optical Properties': ['aerosol.absorption.coefficient','aerosol.backscatter.coefficient','aerosol.backscatter.coefficient.hemispheric','aerosol.backscatter.ratio','aerosol.depolarisation.coefficient','aerosol.depolarisation.ratio','aerosol.extinction.coefficient','aerosol.extinction.ratio','aerosol.extinction.to.backscatter.ratio','aerosol.optical.depth','aerosol.optical.depth.550','aerosol.rayleigh.backscatter','aerosol.scattering.coefficient', 'volume.depolarization.ratio','cloud.condensation.nuclei.number.concentration'],
-    'Aerosol Chemical Properties': ['elemental.carbon','organic.carbon.concentration','organic.mass.concentration','total.carbon.concentration'],
-    'Aerosol Physical Properties': ['particle.number.concentration','particle.number.size.distribution','pm10.concentration','pm1.concentration','pm2.5.concentration','pm2.5-&gt;pm10.concentration'],
+    'Aerosol Optical Properties': ['aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient', 'aerosol.backscatter.coefficient.hemispheric', 'aerosol.backscatter.ratio', 'aerosol.depolarisation.coefficient', 'aerosol.depolarisation.ratio', 'aerosol.extinction.coefficient', 'aerosol.extinction.ratio', 'aerosol.extinction.to.backscatter.ratio', 'aerosol.optical.depth', 'aerosol.optical.depth.550', 'aerosol.rayleigh.backscatter', 'aerosol.scattering.coefficient', 'volume.depolarization.ratio', 'cloud.condensation.nuclei.number.concentration'],
+    'Aerosol Chemical Properties': ['elemental.carbon', 'organic.carbon.concentration', 'organic.mass.concentration', 'total.carbon.concentration'],
+    'Aerosol Physical Properties': ['particle.number.concentration', 'particle.number.size.distribution', 'pm10.concentration', 'pm1.concentration', 'pm2.5.concentration', 'pm2.5-&gt;pm10.concentration'],
 }
 
 
@@ -15,7 +15,8 @@ def get_list_platforms():
         'Content-Type': 'application/json',
     }
 
-    actris_variable_list = ['elemental.carbon', 'organic.carbon.concentration', 'organic.mass.concentration', 'total.carbon.concentration', 'aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient.hemispheric', 'aerosol.scattering.coefficient', 'particle.number.concentration', 'particle.number.size.distribution', 'pm10.concentration', 'pm1.concentration', 'pm2.5.concentration', 'pm2.5-&gt;pm10.concentration']
+    actris_variable_list = ['elemental.carbon', 'organic.carbon.concentration', 'organic.mass.concentration', 'total.carbon.concentration', 'aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient.hemispheric',
+                            'aerosol.scattering.coefficient', 'particle.number.concentration', 'particle.number.size.distribution', 'pm10.concentration', 'pm1.concentration', 'pm2.5.concentration', 'pm2.5-&gt;pm10.concentration']
 
     data = '{"where":{"argument":{"type":"content","sub-type":"attribute_type","value":' + \
         str(actris_variable_list) + \
@@ -31,20 +32,27 @@ def get_list_platforms():
 
     for ds in response.json():
 
-        if ds['md_data_identification']['station']['identifier'] in unique_identifiers:
-            pass
-        else:
-            unique_identifiers.append(ds['md_data_identification']['station']['identifier'])
+        if ds['md_data_identification']['station']['wmo_region'] == 'Europe':
 
-            stations_demonstrator.append(
-                {
-                    'short_name': ds['md_data_identification']['station']['identifier'],
-                    'latitude': ds['md_data_identification']['station']['lat'],
-                    'longitude': ds['md_data_identification']['station']['lon'],
-                    'long_name': ds['md_data_identification']['station']['name'],
-                    'altitude': ds['md_data_identification']['station']['alt']})
+            if ds['md_data_identification']['station']['identifier'] in unique_identifiers:
+                pass
+            else:
+                unique_identifiers.append(
+                    ds['md_data_identification']['station']['identifier'])
+
+                stations_demonstrator.append(
+                    {
+                        'short_name': ds['md_data_identification']['station']['identifier'],
+                        'latitude': ds['md_data_identification']['station']['lat'],
+                        'longitude': ds['md_data_identification']['station']['lon'],
+                        'long_name': ds['md_data_identification']['station']['name'],
+                        'URI': 'https://prod-actris-md.nilu.no/Stations/{0}'.format(ds['md_data_identification']['station']['identifier']),
+                        'altitude': ds['md_data_identification']['station']['alt']})
+        else:
+            pass
 
     return stations_demonstrator
+
 
 def get_list_variables():
 
@@ -78,7 +86,7 @@ def get_list_variables():
 
 def query_datasets(variables, temporal_extent, spatial_extent):
 
-    #try:
+    # try:
 
     actris_variable_list = []
 
@@ -86,10 +94,9 @@ def query_datasets(variables, temporal_extent, spatial_extent):
 
         actris_variable_list.extend(MAPPING_ECV2ACTRIS[v])
 
-
-    start_time,end_time = temporal_extent[0],temporal_extent[1]
+    start_time, end_time = temporal_extent[0], temporal_extent[1]
     #temporal_extent = [start_time, end_time]
-    lon0, lat0, lon1, lat1 = spatial_extent[0],spatial_extent[1],spatial_extent[2],spatial_extent[3],
+    lon0, lat0, lon1, lat1 = spatial_extent[0], spatial_extent[1], spatial_extent[2], spatial_extent[3],
     #spatial_extent = [lon0, lat0, lon1, lat1]
 
     dataset_endpoints = []
@@ -146,7 +153,11 @@ def query_datasets(variables, temporal_extent, spatial_extent):
                 pass
 
             # generate dataset_metadata dict
-            dataset_metadata = {'title':ds['md_identification']['title'], 'urls':[{'url':opendap_url, 'type':'opendap'},{'url':ds['md_distribution_information']['dataset_url'], 'type':'data_file'}], 'ecv_variables':ecv_vars, 'time_period':[ds['ex_temporal_extent']['time_period_begin'], ds['ex_temporal_extent']['time_period_end']], 'platform_id':ds['md_data_identification']['station']['identifier']}
+
+            ds_title = 'Ground based observations of {0} (matrix: {1}) using {2} at {3}: {4} -> {5}'.format(','.join(ds['md_content_information']['attribute_descriptions']), ds['md_actris_specific']['matrix'], ','.join(
+                ds['md_actris_specific']['instrument_type']), ds['md_data_identification']['station']['name'], ds['ex_temporal_extent']['time_period_begin'], ds['ex_temporal_extent']['time_period_end'])
+            dataset_metadata = {'title': ds_title, 'urls': [{'url': opendap_url, 'type': 'opendap'}, {'url': ds['md_distribution_information']['dataset_url'], 'type':'data_file'}], 'ecv_variables': ecv_vars, 'time_period': [
+                ds['ex_temporal_extent']['time_period_begin'], ds['ex_temporal_extent']['time_period_end']], 'platform_id': ds['md_data_identification']['station']['identifier']}
             dataset_endpoints.append(dataset_metadata)
 
         else:
@@ -154,7 +165,7 @@ def query_datasets(variables, temporal_extent, spatial_extent):
 
     return dataset_endpoints
 
-    #except BaseException:
+    # except BaseException:
     #    return "Variables must be one of the following: 'Aerosol Optical Properties','Aerosol Chemical Properties','Aerosol Physical Properties'"
 
 
@@ -180,12 +191,12 @@ def read_dataset(url, variables):
                      }
 
     # For ARES specific variables
-    actris2ares = {'backscatter' : 'aerosol.backscatter.coefficient',
-                'particledepolarization' : 'aerosol.depolarisation.ratio',
-                'extinction' : 'aerosol.extinction.coefficient',
-                'lidarratio' : 'aerosol.extinction.to.backscatter.ratio',
-                'volumedepolarization' : 'volume.depolarization.ratio'
-                }
+    actris2ares = {'backscatter': 'aerosol.backscatter.coefficient',
+                   'particledepolarization': 'aerosol.depolarisation.ratio',
+                   'extinction': 'aerosol.extinction.coefficient',
+                   'lidarratio': 'aerosol.extinction.to.backscatter.ratio',
+                   'volumedepolarization': 'volume.depolarization.ratio'
+                   }
 
     varlist_tmp = []
     for k, v in MAPPING_ECV2ACTRIS.items():
