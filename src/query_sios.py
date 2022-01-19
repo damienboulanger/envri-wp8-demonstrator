@@ -2,163 +2,105 @@
 
 import requests
 import xarray as xr 
+from requests.exceptions import HTTPError
 
-#query csw
-def call_sios_csw():
-    csw_info = []
-    answer = False 
-    while not answer: 
-        response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?q=Norwegian%20weather%20station&f=json')
-        #print('response', response.status_code)
-        if response.status_code != 500:
-            answer = True
-        else: 
-            pass
-    tot_records = response.json()['numberMatched']
-    n_records = response.json()['numberReturned']
-    pages = round(tot_records/n_records)
-    #print(tot_records, n_records, pages)
-    resources = []
-    for index in range(0, pages*n_records,n_records):
-        response = requests.get('https://sios.csw.met.no/collections/metadata:main/items?q=Norwegian%20weather%20station&startindex='+str(index)+'&f=json')
-        for element in response.json()['features']:
-            urls = element['associations']
-            opendap = next(item for item in urls if item['type'] == 'OPENDAP:OPENDAP')
-            download = next(item for item in urls if item['type'] == 'download')
-            csw_info.append({'title' : element['properties']['title'], 
-                             'id': element['id'], 
-                             'urls' : {'landing page' : 'https://sios-svalbard.org/metsis/metadata/'+element['id'], 
-                                       'opendap' : opendap['href'],
-                                       'download' : download['href']}})
+#mapping between cf standard names and ECV variables
+MAPPING_ECV_VARIABLES = {'surface_air_pressure':'Pressure (surface)',
+                         'wind_speed':'Surface Wind Speed and direction',
+                         'wind_from_direction':'Surface Wind Speed and direction',
+                         'air_temperature':'Temperature (near surface)',
+                         'relative_humidity':'Water Vapour (surface)',
+                         #'precipitation_amount':'Precipitation'
+                        }
 
-    return(csw_info)
+#query the REST endpoint to extract Norwegian weather stations indexed in the sios-svalbard.org data portal
+def get_sios_info():
+    sios_info = []
+    endpoint = 'https://sios-svalbard.org/rest/stations/data.json'
+    query = endpoint + '?fulltext="Norwegian weather station"'
+    n_pages = (requests.get(query)).json()['pager']['total_pages']
+    for p in range(0, n_pages):
+        response = requests.get(query+'&page='+str(p))
+        for data in response.json()['rows']:
+            sios_info.append({'title': data['title'],
+                          'id': data['metadata_identifier'],
+                          'latitude': float(data['geographic_extent_rectangle_south']),
+                          'longitude': float(data['geographic_extent_rectangle_west']),
+                          'platform_short_name': data['platform_short_name'],
+                          'platform_long_name': data['platform_long_name'],
+                          'platform_resource': data['platform_resource'],
+                          'date_start': data['temporal_extent_start_date'],
+                          'date_end': data['temporal_extent_end_date'],
+                          #'keywords' : [element.strip() for element in data['keywords_keyword'].split(',') if element.strip() in MAPPING_ECV_VARIABLES.keys()],
+                          'keywords' : [element.strip() for element in data['keywords_keyword'].split(',') if element.strip() in MAPPING_ECV_VARIABLES.keys()] if data['keywords_keyword'] != '' else ['surface_air_pressure', 'air_temperature', 'wind_from_direction', 'wind_speed', 'relative_humidity'],
+                          'urls': [{'url' : 'https://sios-svalbard.org/metsis/metadata/'+data['metadata_identifier'], 'type': 'landing_page'},
+                                   {'url' : data['data_access_url_opendap'], 'type' : 'opendap'},
+                                   {'url' : data['data_access_url_http'], 'type' : 'data_file'}]
+                         })
+    return(sios_info)
 
-
-def sios_dataset_info(url):
-    #cf standard name to ECV mapping
-    mapping = {'surface_air_pressure':'Pressure (surface)',
-               'wind_speed':'Surface Wind Speed and direction', 
-               'wind_from_direction':'Surface Wind Speed and direction', 
-               'air_temperature':'Temperature (near surface)', 
-               'relative_humidity':'Water Vapour (surface)'}   
-    try:
-        ds = xr.open_dataset(url)
-    except: 
-        return
-    try:
-        #get station name
-        station_name = ds.attrs['station_name']
-        wmo_id = ds.attrs['wmo_identifier']
-        platform_url = 'https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-'+wmo_id
-        request_response = requests.head("https://oscar.wmo.int/surface/rest/api/stations/station?wmoIndex=0-20000-0-"+wmo_id)        
-        if request_response.status_code != 200:
-            platform_url = 'None'
-        #get temporal extent
-        start = ds.attrs['time_coverage_start']
-        end = ds.attrs['time_coverage_end']
-        temporal_extent = [start, end]        
-        #get spatial extent
-        lat0 = float(ds.attrs['geospatial_lat_min'])
-        lat1 = float(ds.attrs['geospatial_lat_max'])
-        lon0 = float(ds.attrs['geospatial_lon_min'])
-        lon1 = float(ds.attrs['geospatial_lon_max'])
-        station_info = {'short_name':station_name, 'latitude':lat0,'longitude':lon0, 'URI':platform_url}
-        spatial_extent = [lon0, lat0, lon1, lat1]
-        variables = []
-        for varname, da in ds.data_vars.items():
-            if 'standard_name' in da.attrs and da.attrs['standard_name'] in mapping:
-                variables.append({'variable_name': varname, 'ECV_name': [mapping[da.attrs['standard_name']]]})
-        return dict(url=url, station_info=station_info, variables=variables, temporal_extent=temporal_extent, spatial_extent=spatial_extent)
-    except:
-        #print("no dataset global attributes found for: ", url)
-        return
-
-# all stations info
+#provide the list of platforms for the demonstrator
 def get_list_platforms():
     platform_info = []
-    resources = call_sios_csw()
-    for i in resources:
-        if i['urls']['opendap']:
-            dsinfo = sios_dataset_info(i['urls']['opendap'])
-            if dsinfo != None:
-                platform_info.append(dsinfo['station_info'])
-    return (platform_info)
+    resources = get_sios_info()
+    for resource in resources:
+        if not any(rec['short_name'] == resource['platform_short_name'] for rec in platform_info):
+            platform_info.append({'short_name' : resource['platform_short_name'],
+                                  'long_name' : resource['platform_long_name'],
+                                  'short_name' : resource['platform_short_name'],
+                                  'latitude' : resource['latitude'],
+                                  'longitude' : resource['longitude'],
+                                  'URI' : resource['platform_resource']})
+    return(platform_info)
 
-
-def get_list_variables():    
+#provide the mapping between locally used variables CF standard names and ECV
+def get_list_variables():
     variables = []
-    mapped_variables = []
-    resources = call_sios_csw()
-    for i in resources:
-        dsinfo = sios_dataset_info(i['urls']['opendap'])
-        if dsinfo != None:
-            for vdict in dsinfo['variables']:
-                if vdict['variable_name'] not in mapped_variables:
-                    mapped_variables.append(vdict['variable_name'])
-                    variables.append(vdict)
-    return (variables)
+    mapping = MAPPING_ECV_VARIABLES
+    for k,v in mapping.items():
+        variables.append({'variable_name' : k, 'ECV_name' : [v]})
 
-# query datasets with filters
-def query_datasets(variables_list, temporal_extent, spatial_extent):
-    #info = [{uri:URI, variables: [variables], time:[time], bbox:[bbox]}]
+    return(variables)
+
+#return the urls of data which have at least one variable in the input list and are within the temporal and spatial extent
+#if input is left empty all datasets will be returned
+def query_datasets(variables_list=[], temporal_extent=[None,None], spatial_extent=[None,None,None,None]):
     filtered_dataset_info = []
-    resources = call_sios_csw()
-    start = str(temporal_extent[0])
-    stop = str(temporal_extent[1])
-    for i in resources:
-        dsinfo = sios_dataset_info(i['urls']['opendap'])
-        if dsinfo != None:
-            #start_ds < end and end_ds > start
-            if temporal_extent[0] == None:
-                start = dsinfo['temporal_extent'][0]
-            if temporal_extent[1] == None:
-                stop = dsinfo['temporal_extent'][1]
-            #point location inclued in box
-            if ((dsinfo['temporal_extent'][0] <= stop 
-                    and dsinfo['temporal_extent'][1] >= start) 
-                    and((spatial_extent[0] < dsinfo['spatial_extent'][0] < spatial_extent[2]) 
-                    and (spatial_extent[1] < dsinfo['spatial_extent'][1] < spatial_extent[3]))):
-                variables = []
-                for ds_v in dsinfo['variables']:
-                    variables.append(ds_v['ECV_name'][0])
-                    if ds_v['ECV_name'][0] in variables_list:
-                #        list_identifiers.append(dsinfo['url'])
-                #        break
-                        filtered_dataset_info.append({'title': i['title'], 
-                                      'urls' : i['urls'], 
-                                      'ecv_variables' : variables,
-                                      'time_period' : [dsinfo['temporal_extent'][0],dsinfo['temporal_extent'][1]],
-                                      'platform_id' : dsinfo['station_info']['short_name']})
+    resources = get_sios_info()
+    for resource in resources:
+        if ((not temporal_extent[1] or resource['date_start'] <= temporal_extent[1])
+                and (not temporal_extent[0] or not resource['date_end'] or resource['date_end'] >= temporal_extent[0])
+                and (not spatial_extent[0] or resource['longitude'] >= spatial_extent[0])
+                and (not spatial_extent[2] or resource['longitude'] <= spatial_extent[2])
+                and (not spatial_extent[1] or resource['latitude'] >= spatial_extent[1])
+                and (not spatial_extent[3] or resource['latitude'] <= spatial_extent[3])
+                and (len(variables_list) == 0 or [k for k in resource['keywords'] if MAPPING_ECV_VARIABLES[k] in variables_list])):
+            filtered_dataset_info.append({'title' : resource['title'],
+                                          'urls' : resource['urls'],
+                                          'ecv_variables': list(set([MAPPING_ECV_VARIABLES[k] for k in resource['keywords']])),
+                                          'time_period': [resource['date_start'], resource['date_end']],
+                                          'platform_id': resource['platform_short_name']})
     return(filtered_dataset_info)
 
-#query_datasets(['ECV variable'], ['start date','end date'], ['lon0', 'lat0', 'lon1', 'lat1'])
-#query_datasets(['Pressure (surface)','Surface Wind Speed and direction'], ['1800-03-01T03:00:00','2000-01-01T03:00:00'], [0, 78, 180, 90])
 
-#read datasets
-def read_dataset(url,variables_list, temporal_extent, spatial_extent):
-    ds = xr.open_dataset(url)
-    #cf standard name to ECV mapping
-    mapping = {'surface_air_pressure':'Pressure (surface)',
-               'wind_speed':'Surface Wind Speed and direction', 
-               'wind_from_direction':'Surface Wind Speed and direction', 
-               'air_temperature':'Temperature (near surface)', 
-               'relative_humidity':'Water Vapour (surface)'}       
-    
-    varlist_tmp = []
-    varlist = []
-    # Map variables from ECV
-    for k,v in mapping.items():
-        if v in variables_list:
-            varlist_tmp.append(k)
-    # Choose variables
-    for varname, da in ds.data_vars.items():
-        if 'standard_name' in da.attrs and (da.attrs['standard_name'] in varlist_tmp or da.attrs['standard_name'] == 'latitude' or da.attrs['standard_name'] == 'longitude'):
-            varlist.append(varname)
-    ds = ds[varlist]         
-    
-    return(ds)
+#return an xarray for a specific opendap url with the requested variables
+#if input is empty the whole dataset is returned
+def read_dataset(dataset_id,variables_list=[], temporal_extent=[None,None], spatial_extent=[None,None,None,None]):
+    try:
+        ds = xr.open_dataset(dataset_id)
 
-#read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99752.nc', ['Pressure (surface)', 'Temperature (near surface)'], ['1908-09-01T06:00:00','1910-09-01T06:00:00'], [0, 0, 180, 90])
+        cf_var = [k for k,v in MAPPING_ECV_VARIABLES.items() if v in variables_list]
+        varlist = []
+        for varname, da in ds.data_vars.items():
+            if 'standard_name' in da.attrs and (da.attrs['standard_name'] in cf_var or da.attrs['standard_name'] == 'latitude' or da.attrs['standard_name'] == 'longitude'):
+                varlist.append(da.attrs['standard_name'])
+        standard_name = lambda v: v in varlist
+        ds = ds.filter_by_attrs(standard_name=standard_name)
+        return(ds)
+    except HTTPError as http_err:
+        print(f'HTTP error occurred: {http_err}')
+    except Exception as err:
+        print(f'Other error occurred: {err}')
 
 
 if __name__ == "__main__":
