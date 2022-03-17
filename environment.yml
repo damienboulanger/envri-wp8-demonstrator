@@ -1,24 +1,21 @@
-name: envri-wp8-demonstrator-environment
-
+name: envri-wp8-env
 channels:
   - conda-forge
-
-dependencies: 
-- jupyterlab
-- ipympl
-- python>=3.6
-- pip
-- pip:
-  - owslib
-  - geolinks
-  - ipywidgets
-  - ipydatetime
-  - ipyleaflet
+dependencies:
+  - python>=3.7
+  - pip
+  - requests
+  - numpy
   - pandas
-  - icoscp
-  - folium
-  - icoscp
   - xarray
-  - scipy
-  - ipycache
-  - netCDF4
+  - plotly>=5.4
+  - dash>=2.0,<2.1
+  - dash-bootstrap-components
+  - jupyter-dash
+  - folium
+  - ipykernel==5.5.5
+  - IPython==7.26.0
+  - notebook==6.0.3
+  - jupyter-server-proxy
+  - pip:
+    - icoscp

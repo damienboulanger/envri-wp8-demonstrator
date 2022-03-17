@@ -91,8 +91,8 @@ def query_datasets(variables, temporal_extent, spatial_extent):
     actris_variable_list = []
 
     for v in variables:
-
-        actris_variable_list.extend(MAPPING_ECV2ACTRIS[v])
+        if v in MAPPING_ECV2ACTRIS:
+            actris_variable_list.extend(MAPPING_ECV2ACTRIS[v])
 
     start_time, end_time = temporal_extent[0], temporal_extent[1]
     #temporal_extent = [start_time, end_time]
@@ -115,19 +115,19 @@ def query_datasets(variables, temporal_extent, spatial_extent):
         'https://prod-actris-md.nilu.no/Metadata/query',
         headers=headers,
         data=data)
-
+        
     for ds in response.json():
 
         # filter urls by data provider.
 
+
         lat_point, lon_point = ds['md_data_identification']['station']['lat'], ds['md_data_identification']['station']['lon']
 
         if (lon0 < lon_point < lon1) and (lat0 < lat_point < lat1) == True:
-            local_filename = ds['md_distribution_information']['dataset_url'].split(
-                '/')[-1]
+            
+            local_filename = ds['md_distribution_information'][0]['dataset_url'].split('/')[-1]
 
             if ds['md_metadata']['provider_id'] == 14:
-
                 opendap_url = 'http://thredds.nilu.no/thredds/dodsC/ebas/{0}'.format(
                     local_filename)
             else:
@@ -156,7 +156,7 @@ def query_datasets(variables, temporal_extent, spatial_extent):
 
             ds_title = 'Ground based observations of {0} (matrix: {1}) using {2} at {3}: {4} -> {5}'.format(','.join(ds['md_content_information']['attribute_descriptions']), ds['md_actris_specific']['matrix'], ','.join(
                 ds['md_actris_specific']['instrument_type']), ds['md_data_identification']['station']['name'], ds['ex_temporal_extent']['time_period_begin'], ds['ex_temporal_extent']['time_period_end'])
-            dataset_metadata = {'title': ds_title, 'urls': [{'url': opendap_url, 'type': 'opendap'}, {'url': ds['md_distribution_information']['dataset_url'], 'type':'data_file'}], 'ecv_variables': ecv_vars, 'time_period': [
+            dataset_metadata = {'title': ds_title, 'urls': [{'url': opendap_url, 'type': 'opendap'}, {'url': ds['md_distribution_information'][0]['dataset_url'], 'type':'data_file'}], 'ecv_variables': ecv_vars, 'time_period': [
                 ds['ex_temporal_extent']['time_period_begin'], ds['ex_temporal_extent']['time_period_end']], 'platform_id': ds['md_data_identification']['station']['identifier']}
             dataset_endpoints.append(dataset_metadata)
 
@@ -226,3 +226,6 @@ def read_dataset(url, variables):
 
     except BaseException:
         return None
+
+if __name__ == "__main__":
+    b = query_datasets(variables=['toto'],temporal_extent=['2016-01-01T00:00:00', '2016-01-10T00:00:00'],spatial_extent=[10, 40, 23, 60])
