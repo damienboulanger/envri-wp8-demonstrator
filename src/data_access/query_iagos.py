@@ -2,8 +2,8 @@ import requests
 from requests.exceptions import HTTPError
 import xarray as xr   
 
-REST_URL_STATIONS="http://iagos-data.fr/services/rest/airports/list?format=json&level=2"
-REST_URL_VARIABLES="http://iagos-data.fr/services/rest/parameters/list?format=json"
+REST_URL_STATIONS="https://services.iagos-data.fr/prod/v2.0/airports?active=true"
+REST_URL_VARIABLES="https://services.iagos-data.fr/prod/v2.0/parameters"
 REST_URL_SEARCH="http://iagos-data.fr/services/rest/tracks/list?level=2"
 REST_URL_DOWNLOAD="http://iagos-data.fr/services/rest/download/timeseries"
 REST_URL_KEY="http://iagos-data.fr/services/rest/auth"
@@ -18,7 +18,7 @@ MAPPING_ECV_IAGOS={
     "Carbon Dioxide" : [ "mole_fraction_of_carbon_dioxide_in_air" ],
     "Methane" : [ "mole_fraction_of_methane_in_air" ],
     "Ozone" : [ "mole_fraction_of_ozone_in_air" ],
-    "Carbon monoxide" : [ "mole_fraction_of_carbon_monoxide_in_air" ],
+    "Carbon Monoxide" : [ "mole_fraction_of_carbon_monoxide_in_air" ],
     "NO2" : [ "mole_fraction_of_nitrogen_dioxide_in_air" ]
 }
 MAPPING_CF_IAGOS={
@@ -50,8 +50,8 @@ def get_list_platforms():
         jsonResponse = response.json()
         ret = []
         for item in jsonResponse:
-            if int(item['profiles_number'] > 100):
-                station={ 'short_name': item['iata_code'], 'long_name': item['name'], 'longitude': item['longitude'], 'latitude': item['latitude'], 'altitude': item['altitude']  }
+            if int(item['nb_profiles'] > 100):
+                station={ 'short_name': item['iata_code'], 'long_name': item['city'], 'longitude': item['position']['x'], 'latitude': item['position']['y'], 'altitude': item['altitude']  }
                 ret.append(station)
         return ret    
     except HTTPError as http_err:
@@ -65,9 +65,11 @@ def get_list_variables():
         response.raise_for_status()
         jsonResponse = response.json()
         ret = []
+        done = []
         for item in jsonResponse:
-            if(item['CF_name'] in MAPPING_IAGOS_ECV):
-                variable={ 'variable_name': item['CF_name'], 'ECV_name': MAPPING_IAGOS_ECV[item['CF_name']] }
+            if(item['cf_standard_name'] in MAPPING_IAGOS_ECV and item['cf_standard_name'] not in done):
+                variable={ 'variable_name': item['cf_standard_name'], 'ECV_name': MAPPING_IAGOS_ECV[item['cf_standard_name']] }
+                done.append(item['cf_standard_name'])
                 ret.append(variable)
         return ret    
     except HTTPError as http_err:
