@@ -6,6 +6,9 @@ dependencies:
   - pip
   - requests
   - numpy
+  - scipy
+  - netcdf4
+  - pydap
   - pandas
   - xarray
   - plotly>=5.4
@@ -19,3 +22,6 @@ dependencies:
   - jupyter-server-proxy
   - pip:
     - icoscp
+    - toolz
+    - mmappickle
+#    - fcntl # activate on linux, needs hack on windows

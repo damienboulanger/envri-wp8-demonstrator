@@ -5,6 +5,7 @@ MAPPING_ECV2ACTRIS = {
     'Aerosol Optical Properties': ['aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient', 'aerosol.backscatter.coefficient.hemispheric', 'aerosol.backscatter.ratio', 'aerosol.depolarisation.coefficient', 'aerosol.depolarisation.ratio', 'aerosol.extinction.coefficient', 'aerosol.extinction.ratio', 'aerosol.extinction.to.backscatter.ratio', 'aerosol.optical.depth', 'aerosol.optical.depth.550', 'aerosol.rayleigh.backscatter', 'aerosol.scattering.coefficient', 'volume.depolarization.ratio', 'cloud.condensation.nuclei.number.concentration'],
     'Aerosol Chemical Properties': ['elemental.carbon', 'organic.carbon.concentration', 'organic.mass.concentration', 'total.carbon.concentration'],
     'Aerosol Physical Properties': ['particle.number.concentration', 'particle.number.size.distribution', 'pm10.concentration', 'pm1.concentration', 'pm2.5.concentration', 'pm2.5-&gt;pm10.concentration'],
+    'NO2' : ['nitrogen.dioxide'],
 }
 
 
@@ -187,7 +188,8 @@ def read_dataset(url, variables):
                      'pm25_mass': 'pm2.5.concentration',
                      'pm10_pm25_mass': 'pm2.5-&gt;pm10.concentration',
                      'total_carbon': 'total.carbon.concentration',
-                     'aerosol_optical_depth': 'aerosol.optical.depth'
+                     'aerosol_optical_depth': 'aerosol.optical.depth',
+                     'nitrogen_dioxide': 'nitrogen.dioxide'
                      }
 
     # For ARES specific variables
@@ -228,4 +230,13 @@ def read_dataset(url, variables):
         return None
 
 if __name__ == "__main__":
-    b = query_datasets(variables=['toto'],temporal_extent=['2016-01-01T00:00:00', '2016-01-10T00:00:00'],spatial_extent=[10, 40, 23, 60])
+    #b = query_datasets(variables=['Aerosol Physical Properties'],temporal_extent=['2000-01-01T00:00:00', '2022-01-10T00:00:00'],spatial_extent=[0, 0, 180, 90])
+    #print(b)
+    ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
+    print(ret)
+    ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/DE0007R.20131231230000.20211123085808.high_vol_sampler.pm25_mass.pm25.7y.1d.DE03L_UBA_Ng_HVS_0002.DE28L_UBA_Sm_FWg_0001.lev2.nc", ['Aerosol Physical Properties'])
+    print(ret)
+    ret = read_dataset("https://thredds.nilu.no/thredds/fileServer/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
+    print(ret)
+    
+    

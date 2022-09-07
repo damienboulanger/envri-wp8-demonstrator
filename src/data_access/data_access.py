@@ -1,23 +1,28 @@
 """
 This module provides a unified API for access to metadata and datasets from ACTRIS, IAGOS, SIOS and ICOS RI's.
-At the moment, the access to ICOS RI is implemented here.
 """
 
+import pkg_resources
 import numpy as np
 import pandas as pd
 import logging
 import pathlib
+import json
 import datetime
 from datetime import date
+import itertools
+import xarray as xr
+from mmappickle.dict import mmapdict
 
+from . import helper
 from . import query_actris
 from . import query_iagos
 from . import query_icos
 from . import query_sios
 
 
-CACHE_DIR = pathlib.Path('cache')
-
+LON_LAT_BBOX_EPS = 0.05  # epsil
+CACHE_DIR = pathlib.PurePath(pkg_resources.resource_filename('data_access', 'cache'))
 logger = logging.getLogger(__name__)
 
 
@@ -26,6 +31,8 @@ logger = logging.getLogger(__name__)
 _stations = None
 _variables = None
 
+_RIS = ['actris', 'iagos', 'icos', 'sios']
+_GET_DATASETS_BY_RI = dict()
 
 # mapping from standard ECV names to short variable names (used for time-line graphs)
 # must be updated on adding new RI's!
@@ -44,8 +51,8 @@ VARIABLES_MAPPING = {
     'NO2': 'NO2',
     'Ozone': 'O3',
     'Cloud Properties': 'ClP',
+    'Surface Radiation Budget': 'SRB',
 }
-
 
 _var_codes_by_ECV = pd.Series(VARIABLES_MAPPING, name='code')
 _ECV_by_var_codes = pd.Series({v: k for k, v in VARIABLES_MAPPING.items()}, name='ECV')
@@ -53,7 +60,7 @@ _ECV_by_var_codes = pd.Series({v: k for k, v in VARIABLES_MAPPING.items()}, name
 
 def _get_ri_query_module_by_ri(ris=None):
     if ris is None:
-        ris = ['actris', 'iagos', 'icos', 'sios']
+        ris = _RIS
     else:
         ris = sorted(ri.lower() for ri in ris)
     ri_query_module_by_ri = {}
@@ -78,7 +85,7 @@ def _get_stations(ris=None):
     ri_query_module_by_ri = _get_ri_query_module_by_ri(ris)
     stations_dfs = []
     for ri, ri_query_module in ri_query_module_by_ri.items():
-        cache_path = pathlib.PurePath(CACHE_DIR, f'stations_{ri}.pkl')
+        cache_path = CACHE_DIR / f'stations_{ri}.pkl'
         try:
             try:
                 stations_df = pd.read_pickle(cache_path)
@@ -165,7 +172,7 @@ def get_vars_long():
     if _variables is None:
         variables_dfs = []
         for ri, ri_query_module in _ri_query_module_by_ri.items():
-            cache_path = pathlib.PurePath(CACHE_DIR, f'variables_{ri}.pkl')
+            cache_path = CACHE_DIR / f'variables_{ri}.pkl'
             try:
                 try:
                     variables_df = pd.read_pickle(cache_path)
@@ -194,8 +201,7 @@ def get_vars():
     variables_df = get_vars_long().drop(columns=['variable_name'])
     return variables_df.drop_duplicates(subset=['std_ECV_name', 'ECV_name'], keep='first', ignore_index=True)
 
-
-def get_datasets(variables, lon_min=None, lon_max=None, lat_min=None, lat_max=None, start=None, end=None):
+def get_datasets(variables, lon_min=None, lon_max=None, lat_min=None, lat_max=None, start=None, end=None, selected_RIs=None):
     """
     Provide metadata of datasets selected according to the provided criteria.
     :param variables: list of str or None; list of variable standard ECV names (as in the column 'std_ECV_name' of the dataframe returned by get_vars function)
@@ -222,6 +228,8 @@ def get_datasets(variables, lon_min=None, lon_max=None, lat_min=None, lat_max=No
     """
     if variables is None:
         variables = []
+    else:
+        variables = list(variables)
     if None in [lon_min, lon_max, lat_min, lat_max]:
         bbox = []
     else:
@@ -232,56 +240,76 @@ def get_datasets(variables, lon_min=None, lon_max=None, lat_min=None, lat_max=No
         period = [start, end]
 
     datasets_dfs = []
-    for get_ri_datasets in (_get_actris_datasets, _get_icos_datasets, _get_sios_datasets):
-        df = get_ri_datasets(variables, bbox, period)
-        if df is not None:
-            datasets_dfs.append(df)
-
+    for ri, get_ri_datasets in _GET_DATASETS_BY_RI.items():
+        if ri.upper() in selected_RIs:
+            cache_path = CACHE_DIR / f'datasets_{ri}.pkl'
+            try:
+                try:
+                    df = pd.read_pickle(cache_path)
+                except FileNotFoundError:
+                    df = get_ri_datasets(variables, bbox, period)
+                    df.to_pickle(cache_path)
+            except Exception as e:
+                logger.exception(f'getting datasets for {ri.upper()} failed', exc_info=e)
+            if df is not None:
+                datasets_dfs.append(df)
+    
     if not datasets_dfs:
         return None
-    datasets_df = pd.concat(datasets_dfs, ignore_index=True)
+    datasets_df = pd.concat(datasets_dfs, ignore_index=True)#.reset_index()
 
     vars_long = get_vars_long()
-    def var_names_to_var_codes(var_names):
-        # TODO: performance issues
-        var_names = np.unique(var_names)
-        codes1 = vars_long[['ECV_name', 'code']].join(pd.DataFrame(index=var_names), on='ECV_name', how='inner')
-        codes1 = codes1['code'].unique()
-        codes2 = vars_long[['variable_name', 'code']].join(pd.DataFrame(index=var_names), on='variable_name', how='inner')
-        codes2 = codes2['code'].unique()
-        codes = np.concatenate([codes1, codes2])
-        return np.sort(np.unique(codes)).tolist()
-    def var_names_to_std_ecv_by_var_name(var_names):
-        # TODO: performance issues
-        var_names = np.unique(var_names)
-        std_ECV_names1 = vars_long[['ECV_name', 'std_ECV_name']].join(pd.DataFrame(index=var_names), on='ECV_name', how='inner')
-        std_ECV_names1 = std_ECV_names1.rename(columns={'ECV_name': 'name'}).drop_duplicates(ignore_index=True)
-        std_ECV_names2 = vars_long[['variable_name', 'std_ECV_name']].join(pd.DataFrame(index=var_names), on='variable_name', how='inner')
-        std_ECV_names2 = std_ECV_names2.rename(columns={'variable_name': 'name'}).drop_duplicates(ignore_index=True)
-        std_ECV_names = pd.concat([std_ECV_names1, std_ECV_names2], ignore_index=True).drop_duplicates(ignore_index=True)
-        return std_ECV_names
-    datasets_df['var_codes'] = datasets_df['ecv_variables'].apply(lambda var_names: var_names_to_var_codes(var_names))
-    datasets_df['ecv_variables_filtered'] = datasets_df['ecv_variables'].apply(lambda var_names:
-                                                                               var_names_to_std_ecv_by_var_name(var_names)\
-                                                                               .join(pd.DataFrame(index=variables), on='std_ECV_name', how='inner')['name']\
-                                                                               .tolist())
-    datasets_df['std_ecv_variables_filtered'] = datasets_df['ecv_variables'].apply(lambda var_names:
-                                                                                   [v for v in var_names_to_std_ecv_by_var_name(var_names)['std_ECV_name'].tolist() if v in variables])
-    req_var_codes = set(VARIABLES_MAPPING[v] for v in variables if v in VARIABLES_MAPPING)
-    datasets_df['var_codes_filtered'] = datasets_df['var_codes']\
-        .apply(lambda var_codes: ', '.join([vc for vc in var_codes if vc in req_var_codes]))
 
-    # datasets_df['url'] = datasets_df['urls'].apply(lambda x: x[-1]['url'])  # now we take the last proposed url; TODO: see what should be a proper rule (first non-empty url?)
+    codes_by_ECV_name = helper.many2many_to_dictOfList(
+        zip(vars_long['ECV_name'].to_list(), vars_long['code'].to_list())
+    )
+    codes_by_variable_name = helper.many2many_to_dictOfList(
+        zip(vars_long['variable_name'].to_list(), vars_long['code'].to_list())
+    )
+    codes_by_name = helper.many2manyLists_to_dictOfList(
+        itertools.chain(codes_by_ECV_name.items(), codes_by_variable_name.items())
+    )
+    datasets_df['var_codes'] = [
+        sorted(helper.image_of_dictOfLists(vs, codes_by_name))
+        for vs in datasets_df['ecv_variables'].to_list()
+    ]
+
+    std_ECV_names_by_ECV_name = helper.many2many_to_dictOfList(
+        zip(vars_long['ECV_name'].to_list(), vars_long['std_ECV_name'].to_list()), keep_set=True
+    )
+    std_ECV_names_by_variable_name = helper.many2many_to_dictOfList(
+        zip(vars_long['variable_name'].to_list(), vars_long['std_ECV_name'].to_list()), keep_set=True
+    )
+    std_ECV_names_by_name = helper.many2manyLists_to_dictOfList(
+        itertools.chain(std_ECV_names_by_ECV_name.items(), std_ECV_names_by_variable_name.items()), keep_set=True
+    )
+    datasets_df['ecv_variables_filtered'] = [
+        sorted(
+            v for v in vs if std_ECV_names_by_name[v].intersection(variables)
+        )
+        for vs in datasets_df['ecv_variables'].to_list()
+    ]
+    datasets_df['std_ecv_variables_filtered'] = [
+        sorted(
+            helper.image_of_dictOfLists(vs, std_ECV_names_by_name).intersection(variables)
+        )
+        for vs in datasets_df['ecv_variables'].to_list()
+    ]
+    req_var_codes = helper.image_of_dict(variables, VARIABLES_MAPPING)
+    datasets_df['var_codes_filtered'] = [
+        ', '.join(sorted(vc for vc in var_codes if vc in req_var_codes))
+        for var_codes in datasets_df['var_codes'].to_list()
+    ]
     datasets_df['time_period_start'] = datasets_df['time_period'].apply(lambda x: pd.Timestamp(x[0]))
     datasets_df['time_period_end'] = datasets_df['time_period'].apply(lambda x: pd.Timestamp(x[1]))
     datasets_df['platform_id_RI'] = datasets_df['platform_id'] + ' (' + datasets_df['RI'] + ')'
 
-    # return datasets_df.drop(columns=['urls', 'time_period'])
     return datasets_df.drop(columns=['time_period']).rename(columns={'urls': 'url'})
 
-
 def _get_actris_datasets(variables, bbox, period):
+    print("Search ACTRIS datasets...")
     datasets = query_actris.query_datasets(variables=variables, temporal_extent=period, spatial_extent=bbox)
+    print("done")
     if not datasets:
         return None
     datasets_df = pd.DataFrame.from_dict(datasets)
@@ -292,9 +320,10 @@ def _get_actris_datasets(variables, bbox, period):
     datasets_df['RI'] = 'ACTRIS'
     return datasets_df
 
-
 def _get_icos_datasets(variables, bbox, period):
+    print("Search ICOS datasets...")
     datasets = query_icos.query_datasets(variables=variables, temporal=period, spatial=bbox)
+    print("done")
     if not datasets:
         return None
     datasets_df = pd.DataFrame.from_dict(datasets)
@@ -302,10 +331,12 @@ def _get_icos_datasets(variables, bbox, period):
     return datasets_df
 
 def _get_sios_datasets(variables, bbox, period):
+    print("Search SIOS datasets...")
     bbox2 = bbox
     if len(bbox) == 0:
         bbox2 = [None,None,None,None]
     datasets = query_sios.query_datasets(variables_list=variables, temporal_extent=period, spatial_extent=bbox2)
+    print("done")
     if not datasets:
         return None
     for ds in datasets:
@@ -313,6 +344,33 @@ def _get_sios_datasets(variables, bbox, period):
     datasets_df = pd.DataFrame.from_dict(datasets)
     datasets_df['RI'] = 'SIOS'
     return datasets_df
+
+# Temporary solution for IAGOS L3 data access until REST access is provided (using local files access).
+_iagos_catalogue_df = None
+
+def _get_iagos_datasets_catalogue():
+    global _iagos_catalogue_df
+    if _iagos_catalogue_df is None:
+        url = pkg_resources.resource_filename('data_access', 'resources/catalogue.json')
+        with open(url, 'r') as f:
+            md = json.load(f)
+        _iagos_catalogue_df = pd.DataFrame.from_records(md)
+    return _iagos_catalogue_df
+
+def _get_iagos_datasets(variables, bbox, period):
+    print("Search IAGOS datasets...")
+    variables = set(variables)
+    df = _get_iagos_datasets_catalogue()
+    print("done")
+    variables_filter = df['ecv_variables'].map(lambda vs: bool(variables.intersection(vs)))
+    lon_min, lat_min, lon_max, lat_max = bbox
+    bbox_filter = (df['longitude'] >= lon_min - LON_LAT_BBOX_EPS) & (df['longitude'] <= lon_max + LON_LAT_BBOX_EPS) & \
+                  (df['latitude'] >= lat_min - LON_LAT_BBOX_EPS) & (df['latitude'] <= lat_max + LON_LAT_BBOX_EPS)
+    df = df[variables_filter & bbox_filter].explode('layer', ignore_index=True)
+    df['title'] = df['title'] + ' in ' + df['layer']
+    df['selector'] = 'layer:' + df['layer']
+    df = df[['title', 'urls', 'ecv_variables', 'time_period', 'platform_id', 'RI', 'selector']]
+    return df
 
 def filter_datasets_on_stations(datasets_df, stations_short_name):
     """
@@ -322,7 +380,6 @@ def filter_datasets_on_stations(datasets_df, stations_short_name):
     :return: pandas.DataFrame
     """
     return datasets_df[datasets_df['platform_id'].isin(stations_short_name)]
-
 
 def filter_datasets_on_vars(datasets_df, var_codes):
     """
@@ -335,36 +392,11 @@ def filter_datasets_on_vars(datasets_df, var_codes):
     mask = datasets_df['var_codes'].apply(lambda vc: not var_codes.isdisjoint(vc))
     return datasets_df[mask]
 
-
-# def _to_hashable(x):
-#     """
-#     Convert a structure to a hashable one.
-#     :param x: list of dicts of list of ...
-#     :return: a hashable structure
-#     """
-#     try:
-#         hash(x)
-#         return x
-#     except TypeError:
-#         if isinstance(x, (tuple, list)):
-#             return tuple(_to_hashable(i) for i in x)
-#         elif isinstance(x, dict):
-#             return frozendict({k: _to_hashable(v) for k, v in x.items()})
-#         else:
-#             raise TypeError(type(x))
-
-
-# def _read_dataset(ri, url):
-#     _ri_query_module[ri].
-#     path = str(CACHE_DS_DIR / url.split('/')[-1])
-#     res = requests.get(url)
-#     with open(path, 'wb') as f:
-#         f.write(res.content)
-#     _cache_ds_dict[url] = path
-
-
 def read_dataset(ri, url, ds_metadata):
     if isinstance(url, (list, tuple)):
+        #print("list_urls=" + str(url))
+        #if len(url) > 1:
+        #    print("Multiple urls for this dataset")
         ds = None
         for single_url in url:
             ds = read_dataset(ri, single_url, ds_metadata)
@@ -372,27 +404,48 @@ def read_dataset(ri, url, ds_metadata):
                 break
         return ds
 
-    if isinstance(url, dict):
+    if isinstance(url, dict):      
+        print("dict_urls=" + str(url))
+        # if ri.lower() == "actris": # Only reading 'opendap' urls for ACTRIS.
+        #     if url['type'] != None and url['type'] != "opendap":
+        #         print('ACTRIS URL ignored, not opendap')
+        #         return None          
+        #
+        # if ri.lower() == "sios": # Only reading 'opendap' urls for SIOS.
+        #     if url['type'] != None and url['type'] != "opendap":
+        #         print('SIOS URL ignored, not opendap')
+        #         return None          
         return read_dataset(ri, url['url'], ds_metadata)
 
     if not isinstance(url, str):
         raise ValueError(f'url must be str; got: {url} of type={type(url)}')
 
+    print("single url=" + str(url))  
     ri = ri.lower()
-    # path = _ri_cache_ds_dict[ri].get(url)
-    # if path is None:
-    #     ds, path = _read_dataset(ri, url)
-    #     if ds is not None:
-    #         _ri_cache_ds_dict[ri][url] = path
-    #         with open(RI_CACHE_DS_DICT_FILE[ri], 'a') as f:
-    #             yaml.safe_dump({url: str(path)}, f)
-    #     return ds
-    # else:
-    #     return xr.load_dataset(path)
+    
+    # generating unique identifier for the dataset from URL, lower and removing special characters.
+    import re
+    dataset_id = re.sub(r"[^a-z0-9]","",url.lower())
+    cache_path = CACHE_DIR / f'data_{ri}.pkl'
+    m = mmapdict(str(cache_path))
+    print(ds_metadata['ecv_variables_filtered'])
     if ri == 'actris':
-        return _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'])
+        if dataset_id not in m:
+            ds = _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'])
+            if ds == None:
+                print("ACTRIS dataset couldn't be loaded")
+                return None          
+            ds = ds.load().copy()
+            m[dataset_id] = ds
+        else:
+            ds = m[dataset_id]
+        print(ds)
     elif ri == 'icos':
-        ds = _ri_query_module_by_ri[ri].read_dataset(url)
+        if dataset_id not in m:
+            ds = _ri_query_module_by_ri[ri].read_dataset(url)
+            m[dataset_id] = ds
+        else:
+            ds = m[dataset_id]
         vars_long = get_vars_long()
         variables_names_filtered = list(vars_long.join(
             pd.DataFrame(index=ds_metadata['std_ecv_variables_filtered']),
@@ -400,4 +453,37 @@ def read_dataset(ri, url, ds_metadata):
             how='inner')['variable_name'].unique())
         variables_names_filtered = [v for v in ds if v in variables_names_filtered]
         ds_filtered = ds[['TIMESTAMP'] + variables_names_filtered].compute()
-        return ds_filtered.assign_coords({'index': ds['TIMESTAMP']}).rename({'index': 'time'}).drop_vars('TIMESTAMP')
+        ds = ds_filtered.assign_coords({'index': ds['TIMESTAMP']}).rename({'index': 'time'}).drop_vars('TIMESTAMP')
+    elif ri == 'sios':
+        if dataset_id not in m:
+            ds = _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'],  [None,None], [None, None, None, None])
+            m[dataset_id] = ds
+        else:
+            ds = m[dataset_id]
+    elif ri == 'iagos':
+        data_path = pathlib.Path(pkg_resources.resource_filename('data_access', 'resources/iagos_L3_postprocessed'))
+        ds = xr.open_dataset(data_path / url)
+        if 'selector' in ds_metadata and ds_metadata['selector'] is not np.nan and bool(ds_metadata['selector']):
+            dim, *coord = ds_metadata['selector'].split(':')
+            coord = ':'.join(coord)
+            ds = ds.sel({dim: coord})
+        std_ecv_to_vcode = {
+            'Carbon Monoxide': 'CO_mean',
+            'Ozone': 'O3_mean',
+        }
+        vs = [std_ecv_to_vcode[v] for v in ds_metadata['std_ecv_variables_filtered']]
+        ds = ds[vs].load()
+    else:
+        raise ValueError(f'unknown RI={ri}')
+        
+    res = {}
+    if ds is not None:
+        for v, da in ds.items():
+            res[v] = da
+    return res
+        
+#! same order as in _RIs
+_GET_DATASETS_BY_RI.update(zip(_RIS, (_get_actris_datasets, _get_iagos_datasets, _get_icos_datasets, _get_sios_datasets)))
+
+if __name__ == "__main__":
+    pass

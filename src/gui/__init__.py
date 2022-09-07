@@ -13,4 +13,5 @@ from .plot import (
     get_timeline_by_station,
     get_timeline_by_station_and_vars,
     plot_vars,
+    add_trace,
 )

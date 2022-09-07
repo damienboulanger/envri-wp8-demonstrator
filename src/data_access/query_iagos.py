@@ -2,8 +2,8 @@ import requests
 from requests.exceptions import HTTPError
 import xarray as xr   
 
-REST_URL_STATIONS="https://services.iagos-data.fr/prod/v2.0/airports?active=true"
-REST_URL_VARIABLES="https://services.iagos-data.fr/prod/v2.0/parameters"
+REST_URL_STATIONS="https://services.iagos-data.fr/prod/v2.0/airports/public?active=true"
+REST_URL_VARIABLES="https://services.iagos-data.fr/prod/v2.0/parameters/public"
 REST_URL_SEARCH="http://iagos-data.fr/services/rest/tracks/list?level=2"
 REST_URL_DOWNLOAD="http://iagos-data.fr/services/rest/download/timeseries"
 REST_URL_KEY="http://iagos-data.fr/services/rest/auth"

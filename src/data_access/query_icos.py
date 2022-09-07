@@ -155,7 +155,7 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
     Returns
     -------
     LIST[DICT]
-    Where DICT is of form {title:’’, urls:[{url:’’, type:”}], ecv_variables:[], time_period:[start, end], platform_id:””}
+    Where DICT is of form {title:â€™â€™, urls:[{url:â€™â€™, type:â€�}], ecv_variables:[], time_period:[start, end], platform_id:â€�â€�}
     
     title: title of the dataset
     urls: list of urls for the dataset. Can include link to a landing page, link to the data file, opendap link
@@ -289,6 +289,14 @@ if __name__ == "__main__":
     #a= get_list_platforms()
     #print(get_list_variables())
     b = query_datasets(variables=['temperature','n2o'],temporal=['2016-01-01','2016-04-31'])
+    print(b)
+    data = read_dataset(b[0]['urls'][0]['url'])
+    print(data)
+    variables=['AT']
+    data=data[variables]
+    print(data)
+    data2=data.to_dataframe()
+    print(data2)
     #print(query_datasets(['Pressure (surface)'], ['2018-01-01T03:00:00','2021-12-31T24:00:00'],[10, 40, 23, 60]))
     #pids = query_datasets(variables=['co2', 'ws','Carbon Dioxide, Methane and other Greenhouse gases'], temporal= ['2018-01-01T03:00:00','2021-12-31T24:00:00'], spatial = [10, 40, 23, 60])
     #print(pids)

@@ -23,10 +23,11 @@ def get_variables_checklist(list_id, std_variables):
     :return: dash.dcc.Checklist
     """
     variables_options = std_variables.to_dict(orient='records')
+    sorted_variables_options = sorted(variables_options, key=lambda d: d['label']) 
     variables_values = std_variables['value'].tolist()
     variables_checklist = dbc.Checklist(
         id=list_id,
-        options=variables_options,
+        options=sorted_variables_options,
         value=variables_values,
         labelStyle={'display': 'flex'},  # display in column rather than in a row; not sure if it is the right way to do
     )
@@ -47,8 +48,8 @@ def get_stations_map(map_id, stations):
         size_max=7,
         category_orders={'RI': ['ACTRIS', 'IAGOS', 'ICOS', 'SIOS']},
         color_discrete_sequence=[ACTRIS_COLOR_HEX, IAGOS_COLOR_HEX, ICOS_COLOR_HEX, SIOS_COLOR_HEX],
-        center={'lat': 54, 'lon':12},
-        zoom=3, height=600,
+        center={'lat': 67, 'lon':12},
+        zoom=2.3,
         title='Stations map',
     )
     fig.update_layout(
@@ -62,6 +63,7 @@ def get_stations_map(map_id, stations):
     stations_map = dcc.Graph(
         id=map_id,
         figure=fig,
+        style={'height':800}
     )
     return stations_map
 
@@ -242,3 +244,60 @@ def plot_vars(ds, v1, v2=None):
         )
 
     return fig
+
+def add_trace(fig, ds, ri, vs, axes, legend):
+    vars_long = data_access.get_vars_long()
+    v_names = []
+    axes=axes
+    tempaxes={}
+    for i, v in enumerate(vs):
+        da = ds[v]
+        units=da.attrs['units'] if 'units' in da.attrs else "no units"
+        name=da.attrs['standard_name'] if 'standard_name' in da.attrs else v
+        tempaxes[name + " (" + units + ")"]=units
+        if units not in axes:
+            axes.append(units)
+        fig.add_trace(
+            go.Scatter(
+                x=da['time'].values,
+                y=da.values,
+                name=name + " (" + units + ") (" + legend + ")",
+                legendgroup=ri,  # this can be any string, not just "group"
+                legendgrouptitle_text=ri,
+                yaxis=f"y{axes.index(units) + 1}",
+            )
+        )
+    
+    fig.update_layout(
+        xaxis=dict(
+            domain=[0.0, 0.95]
+        ),
+        yaxis1=dict(
+            title=axes[0],
+            anchor='x',
+            side='left',
+        ),
+    )
+    
+    fig.update_layout(
+    {
+        t.yaxis.replace("y", "yaxis"): {
+            "title": tempaxes[t.name],
+            "overlaying": "y",
+            "side": f"{'right' if (i % 2) != 0 else 'left'}",
+            "position":1-(i/15)
+        }
+        for i, t in enumerate(fig.data)
+        if t.yaxis != "y"
+    }
+    ).update_layout(
+        #title_text="You have selected the following datasets: ...",
+        legend_title_text='Variables',
+        showlegend=True,
+        legend=dict(groupclick="toggleitem"),
+        xaxis={"domain":[0,1-((len(axes)-1)*.07)]},
+    )
+    fig.update_xaxes(title_text="Time") 
+    
+    return fig, axes 
+

@@ -1,0 +1,4243 @@
+[
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_ATL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-03-21T11:00:00Z",
+      "2020-03-10T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ATL",
+    "longitude": -84.44403,
+    "latitude": 33.640068
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_BKK.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2006-10-01T11:00:00Z",
+      "2020-06-24T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BKK",
+    "longitude": 100.752045,
+    "latitude": 13.693062
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_BOG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2010-11-17T11:00:00Z",
+      "2018-10-23T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOG",
+    "longitude": -74.143135,
+    "latitude": 4.698602
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_BOS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-19T11:00:00Z",
+      "2020-09-20T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOS",
+    "longitude": -71.02018,
+    "latitude": 42.36646
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_CCS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-03-29T11:00:00Z",
+      "2018-06-16T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CCS",
+    "longitude": -67.00551,
+    "latitude": 10.596942
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_CDG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-08T11:00:00Z",
+      "2018-08-29T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CDG",
+    "longitude": 2.567023,
+    "latitude": 49.003197
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_DUS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "1999-07-07T11:00:00Z",
+      "2015-10-28T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DUS",
+    "longitude": 6.76558,
+    "latitude": 51.278328
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_FRA.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-19T11:00:00Z",
+      "2021-01-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "FRA",
+    "longitude": 8.570773,
+    "latitude": 50.050735
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_HKG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-12-11T11:00:00Z",
+      "2020-12-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HKG",
+    "longitude": 113.93649,
+    "latitude": 22.315248
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_KIX.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-01-08T11:00:00Z",
+      "2018-08-28T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "KIX",
+    "longitude": 135.24397,
+    "latitude": 34.43533
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_MUC.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "1997-12-17T11:00:00Z",
+      "2020-03-04T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MUC",
+    "longitude": 11.790143,
+    "latitude": 48.353004
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_NGO.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2006-03-11T11:00:00Z",
+      "2020-02-27T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NGO",
+    "longitude": 136.80528,
+    "latitude": 34.858334
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_NRT.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-10T11:00:00Z",
+      "2018-09-18T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NRT",
+    "longitude": 140.38744,
+    "latitude": 35.773212
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_ORD.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-03-08T11:00:00Z",
+      "2018-08-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ORD",
+    "longitude": -87.90488,
+    "latitude": 41.976913
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_TPE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2012-07-02T11:00:00Z",
+      "2018-09-25T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "TPE",
+    "longitude": 121.22389,
+    "latitude": 25.07639
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_VIE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-10T11:00:00Z",
+      "2017-01-03T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "VIE",
+    "longitude": 16.563583,
+    "latitude": 48.11972
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_YVR.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-21T11:00:00Z",
+      "2020-07-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YVR",
+    "longitude": -123.17919,
+    "latitude": 49.1947
+  },
+  {
+    "title": "Daily aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_daily_means/CO_vp_daily_YYZ.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-11-21T11:00:00Z",
+      "2019-01-10T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YYZ",
+    "longitude": -79.61146,
+    "latitude": 43.681583
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_ATL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-11-27T11:00:00Z",
+      "2021-06-16T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ATL",
+    "longitude": -84.44403,
+    "latitude": 33.640068
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_BKK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2006-10-01T11:00:00Z",
+      "2020-06-25T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BKK",
+    "longitude": 100.752045,
+    "latitude": 13.693062
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_BOS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-01T11:00:00Z",
+      "2021-07-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOS",
+    "longitude": -71.02018,
+    "latitude": 42.36646
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_BRU.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1997-04-28T11:00:00Z",
+      "2009-03-28T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BRU",
+    "longitude": 4.483602,
+    "latitude": 50.89717
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_CCS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2000-10-17T11:00:00Z",
+      "2018-06-16T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CCS",
+    "longitude": -67.00551,
+    "latitude": 10.596942
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_CDG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-02T11:00:00Z",
+      "2018-08-29T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CDG",
+    "longitude": 2.567023,
+    "latitude": 49.003197
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_DAL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-28T11:00:00Z",
+      "2021-05-12T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DAL",
+    "longitude": -96.85,
+    "latitude": 32.84391
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_DUS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-04-07T11:00:00Z",
+      "2015-10-28T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DUS",
+    "longitude": 6.76558,
+    "latitude": 51.278328
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_EWR.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-23T11:00:00Z",
+      "2021-05-29T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "EWR",
+    "longitude": -74.17876,
+    "latitude": 40.68907
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_FRA.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-11T11:00:00Z",
+      "2021-07-03T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "FRA",
+    "longitude": 8.570773,
+    "latitude": 50.050735
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_HKG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-09-29T11:00:00Z",
+      "2020-12-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HKG",
+    "longitude": 113.93649,
+    "latitude": 22.315248
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_HNL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2015-10-30T11:00:00Z",
+      "2018-12-18T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HNL",
+    "longitude": -157.92166,
+    "latitude": 21.325832
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_JFK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-15T11:00:00Z",
+      "2021-07-02T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "JFK",
+    "longitude": -73.78817,
+    "latitude": 40.642334
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_KIX.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-16T11:00:00Z",
+      "2018-12-17T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "KIX",
+    "longitude": 135.24397,
+    "latitude": 34.43533
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_MUC.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1996-02-04T11:00:00Z",
+      "2020-03-04T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MUC",
+    "longitude": 11.790143,
+    "latitude": 48.353004
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_NGO.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2006-03-27T11:00:00Z",
+      "2020-02-27T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NGO",
+    "longitude": 136.80528,
+    "latitude": 34.858334
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_NRT.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-28T11:00:00Z",
+      "2018-12-04T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NRT",
+    "longitude": 140.38744,
+    "latitude": 35.773212
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_ORD.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-11-06T11:00:00Z",
+      "2018-08-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ORD",
+    "longitude": -87.90488,
+    "latitude": 41.976913
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_PEK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-26T11:00:00Z",
+      "2018-08-16T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PEK",
+    "longitude": 116.5871,
+    "latitude": 40.078537
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_TPE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2012-07-02T11:00:00Z",
+      "2018-06-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "TPE",
+    "longitude": 121.22389,
+    "latitude": 25.07639
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_VIE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-05T11:00:00Z",
+      "2017-01-03T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "VIE",
+    "longitude": 16.563583,
+    "latitude": 48.11972
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_YVR.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-07-11T11:00:00Z",
+      "2021-05-18T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YVR",
+    "longitude": -123.17919,
+    "latitude": 49.1947
+  },
+  {
+    "title": "Daily aggregated profile data of ozone mixing ratio",
+    "urls": "vp_daily_means/O3_vp_daily_YYZ.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-06T11:00:00Z",
+      "2021-04-10T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YYZ",
+    "longitude": -79.61146,
+    "latitude": 43.681583
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_EUS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-16T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "EUS",
+    "longitude": -75.0,
+    "latitude": 42.5
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_Eur.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-06-15T00:00:00Z",
+      "2020-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Eur",
+    "longitude": 0.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_MidE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-01-16T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "MidE",
+    "longitude": 40.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_NAt.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-16T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NAt",
+    "longitude": -35.0,
+    "latitude": 55.0
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_NEAs.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-14T00:00:00Z",
+      "2020-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NEAs",
+    "longitude": 125.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_Sib.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-14T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Sib",
+    "longitude": 80.0,
+    "latitude": 57.5
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_WMed.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-01-16T00:00:00Z",
+      "2020-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WMed",
+    "longitude": 5.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_monthly_means/CO_reg_monthly_WNAm.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-11-15T00:00:00Z",
+      "2020-02-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WNAm",
+    "longitude": -115.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_EUS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "EUS",
+    "longitude": -75.0,
+    "latitude": 42.5
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_Eur.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Eur",
+    "longitude": 0.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_MidE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-15T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "MidE",
+    "longitude": 40.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_NAt.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NAt",
+    "longitude": -35.0,
+    "latitude": 55.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_NEAs.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-16T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NEAs",
+    "longitude": 125.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_Sib.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-16T00:00:00Z",
+      "2021-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Sib",
+    "longitude": 80.0,
+    "latitude": 57.5
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_WMed.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WMed",
+    "longitude": 5.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Monthly aggregated regional data of ozone mixing ratio",
+    "urls": "reg_monthly_means/O3_reg_monthly_WNAm.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-12-16T00:00:00Z",
+      "2021-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique",
+      "day_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WNAm",
+    "longitude": -115.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_EUS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-05-13T11:00:00Z",
+      "2020-09-20T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "EUS",
+    "longitude": -75.0,
+    "latitude": 42.5
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_Eur.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "1997-12-17T11:00:00Z",
+      "2021-01-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Eur",
+    "longitude": 0.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_MidE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "1997-11-25T11:00:00Z",
+      "2021-01-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "MidE",
+    "longitude": 40.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_NAt.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-06-25T11:00:00Z",
+      "2020-09-21T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NAt",
+    "longitude": -35.0,
+    "latitude": 55.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_NEAs.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-25T11:00:00Z",
+      "2020-12-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NEAs",
+    "longitude": 125.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_Sib.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-25T11:00:00Z",
+      "2020-12-31T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Sib",
+    "longitude": 80.0,
+    "latitude": 57.5
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_WMed.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2000-05-19T11:00:00Z",
+      "2020-12-27T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WMed",
+    "longitude": 5.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of carbon monoxide mixing ratio",
+    "urls": "reg_daily_means/CO_reg_daily_WNAm.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-21T11:00:00Z",
+      "2020-07-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "CO_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WNAm",
+    "longitude": -115.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_EUS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-03T11:00:00Z",
+      "2021-07-02T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "EUS",
+    "longitude": -75.0,
+    "latitude": 42.5
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_Eur.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-01T11:00:00Z",
+      "2021-07-03T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Eur",
+    "longitude": 0.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_MidE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-08T11:00:00Z",
+      "2021-07-01T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "MidE",
+    "longitude": 40.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_NAt.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-01T11:00:00Z",
+      "2021-07-02T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NAt",
+    "longitude": -35.0,
+    "latitude": 55.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_NEAs.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-05T11:00:00Z",
+      "2020-12-19T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "NEAs",
+    "longitude": 125.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_Sib.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-05T11:00:00Z",
+      "2021-05-21T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "Sib",
+    "longitude": 80.0,
+    "latitude": 57.5
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_WMed.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-02T11:00:00Z",
+      "2021-06-25T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WMed",
+    "longitude": 5.0,
+    "latitude": 40.0
+  },
+  {
+    "title": "Daily aggregated regional data of ozone mixing ratio",
+    "urls": "reg_daily_means/O3_reg_daily_WNAm.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-11-02T11:00:00Z",
+      "2021-05-21T11:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "O3_min",
+      "idx_nunique"
+    ],
+    "layer": [
+      "UT",
+      "TPL",
+      "LS"
+    ],
+    "platform_id": "WNAm",
+    "longitude": -115.0,
+    "latitude": 50.0
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DUS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-04-15T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DUS",
+    "longitude": 6.76558,
+    "latitude": 51.278328
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DXB.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1998-06-15T00:00:00Z",
+      "2021-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DXB",
+    "longitude": 55.352917,
+    "latitude": 25.248665
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_EWR.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-16T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "EWR",
+    "longitude": -74.17876,
+    "latitude": 40.68907
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_FRA.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "FRA",
+    "longitude": 8.570773,
+    "latitude": 50.050735
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_GIG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-15T00:00:00Z",
+      "2013-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "GIG",
+    "longitude": -43.24651,
+    "latitude": -22.814653
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_GMP.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-07-16T00:00:00Z",
+      "1999-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "GMP",
+    "longitude": 126.80351,
+    "latitude": 37.559288
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_GRU.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-15T00:00:00Z",
+      "2014-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "GRU",
+    "longitude": -46.481926,
+    "latitude": -23.425669
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_HKG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2005-01-16T00:00:00Z",
+      "2020-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HKG",
+    "longitude": 113.93649,
+    "latitude": 22.315248
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_HNL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2016-01-16T00:00:00Z",
+      "2018-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HNL",
+    "longitude": -157.92166,
+    "latitude": 21.325832
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_HYD.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2006-05-16T00:00:00Z",
+      "2011-09-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HYD",
+    "longitude": 78.428055,
+    "latitude": 17.24
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_IAD.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "IAD",
+    "longitude": -77.44774,
+    "latitude": 38.95315
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_IAH.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2017-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "IAH",
+    "longitude": -95.34,
+    "latitude": 29.983334
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_JED.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2002-03-16T00:00:00Z",
+      "2018-04-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "JED",
+    "longitude": 39.150578,
+    "latitude": 21.670233
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_JFK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-09-15T00:00:00Z",
+      "2018-01-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "JFK",
+    "longitude": -73.78817,
+    "latitude": 40.642334
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_JNB.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-04-15T00:00:00Z",
+      "2002-02-14T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "JNB",
+    "longitude": 28.231314,
+    "latitude": -26.132664
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_KIX.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-07-16T00:00:00Z",
+      "2018-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "KIX",
+    "longitude": 135.24397,
+    "latitude": 34.43533
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_KWI.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2003-12-16T00:00:00Z",
+      "2019-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "KWI",
+    "longitude": 47.971252,
+    "latitude": 29.240116
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_LAX.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1996-05-16T00:00:00Z",
+      "2018-11-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "LAX",
+    "longitude": -118.40828,
+    "latitude": 33.943398
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_LGW.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2005-12-16T00:00:00Z",
+      "2009-04-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "LGW",
+    "longitude": -0.161863,
+    "latitude": 51.156807
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_MAA.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2001-01-16T00:00:00Z",
+      "2018-04-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MAA",
+    "longitude": 80.16378,
+    "latitude": 12.982267
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_MIA.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2005-01-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MIA",
+    "longitude": -80.27824,
+    "latitude": 25.796
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_MUC.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1998-09-15T00:00:00Z",
+      "2019-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MUC",
+    "longitude": 11.790143,
+    "latitude": 48.353004
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_NGO.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2009-11-15T00:00:00Z",
+      "2020-02-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NGO",
+    "longitude": 136.80528,
+    "latitude": 34.858334
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_NRT.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-04-15T00:00:00Z",
+      "2018-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NRT",
+    "longitude": 140.38744,
+    "latitude": 35.773212
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_ORD.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-11-15T00:00:00Z",
+      "2017-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ORD",
+    "longitude": -87.90488,
+    "latitude": 41.976913
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_PDX.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2004-01-16T00:00:00Z",
+      "2009-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PDX",
+    "longitude": -122.5929,
+    "latitude": 45.588997
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_PEK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-16T00:00:00Z",
+      "2016-01-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PEK",
+    "longitude": 116.5871,
+    "latitude": 40.078537
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_PHL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-06-15T00:00:00Z",
+      "2014-02-14T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PHL",
+    "longitude": -75.2433,
+    "latitude": 39.87641
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_SFO.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-12-16T00:00:00Z",
+      "2018-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "SFO",
+    "longitude": -122.38988,
+    "latitude": 37.615215
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_SHA.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1997-06-15T00:00:00Z",
+      "2000-02-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "SHA",
+    "longitude": 121.34197,
+    "latitude": 31.196815
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_THR.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1998-03-16T00:00:00Z",
+      "2005-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "THR",
+    "longitude": 51.32187,
+    "latitude": 35.691532
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_TPE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2012-07-16T00:00:00Z",
+      "2018-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "TPE",
+    "longitude": 121.22389,
+    "latitude": 25.07639
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_VIE.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-03-16T00:00:00Z",
+      "2016-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "VIE",
+    "longitude": 16.563583,
+    "latitude": 48.11972
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_WDH.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-11-15T00:00:00Z",
+      "2013-01-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "WDH",
+    "longitude": 17.463202,
+    "latitude": -22.487345
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_YUL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2001-08-16T00:00:00Z",
+      "2014-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YUL",
+    "longitude": -73.74991,
+    "latitude": 45.457714
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_YVR.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-01-16T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YVR",
+    "longitude": -123.17919,
+    "latitude": 49.1947
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_YYZ.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-02-14T00:00:00Z",
+      "2013-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YYZ",
+    "longitude": -79.61146,
+    "latitude": 43.681583
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_ATL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-08-16T00:00:00Z",
+      "2019-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ATL",
+    "longitude": -84.44403,
+    "latitude": 33.640068
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_BKK.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2006-10-16T00:00:00Z",
+      "2019-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BKK",
+    "longitude": 100.752045,
+    "latitude": 13.693062
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_BOG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2016-04-15T00:00:00Z",
+      "2018-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOG",
+    "longitude": -74.143135,
+    "latitude": 4.698602
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_BOS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-07-16T00:00:00Z",
+      "2019-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOS",
+    "longitude": -71.02018,
+    "latitude": 42.36646
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_CCS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-01-16T00:00:00Z",
+      "2017-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CCS",
+    "longitude": -67.00551,
+    "latitude": 10.596942
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_CDG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-14T00:00:00Z",
+      "2018-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CDG",
+    "longitude": 2.567023,
+    "latitude": 49.003197
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_DAL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-05-16T00:00:00Z",
+      "2016-11-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DAL",
+    "longitude": -96.85,
+    "latitude": 32.84391
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_DEL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-04-15T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DEL",
+    "longitude": 77.10079,
+    "latitude": 28.556555
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_DUS.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2014-03-16T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DUS",
+    "longitude": 6.76558,
+    "latitude": 51.278328
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_EWR.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-11-15T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "EWR",
+    "longitude": -74.17876,
+    "latitude": 40.68907
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_FRA.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2001-12-16T00:00:00Z",
+      "2020-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "FRA",
+    "longitude": 8.570773,
+    "latitude": 50.050735
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_HKG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2004-06-15T00:00:00Z",
+      "2020-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HKG",
+    "longitude": 113.93649,
+    "latitude": 22.315248
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_HYD.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2006-03-16T00:00:00Z",
+      "2011-09-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "HYD",
+    "longitude": 78.428055,
+    "latitude": 17.24
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_IAD.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-11-15T00:00:00Z",
+      "2019-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "IAD",
+    "longitude": -77.44774,
+    "latitude": 38.95315
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_JFK.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-06-15T00:00:00Z",
+      "2016-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "JFK",
+    "longitude": -73.78817,
+    "latitude": 40.642334
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_KIX.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-08-16T00:00:00Z",
+      "2018-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "KIX",
+    "longitude": 135.24397,
+    "latitude": 34.43533
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_LAX.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2004-04-15T00:00:00Z",
+      "2005-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "LAX",
+    "longitude": -118.40828,
+    "latitude": 33.943398
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_LGW.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2005-12-16T00:00:00Z",
+      "2009-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "LGW",
+    "longitude": -0.161863,
+    "latitude": 51.156807
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_MAA.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2012-03-16T00:00:00Z",
+      "2018-04-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MAA",
+    "longitude": 80.16378,
+    "latitude": 12.982267
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_MUC.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-06-15T00:00:00Z",
+      "2019-11-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "MUC",
+    "longitude": 11.790143,
+    "latitude": 48.353004
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_NGO.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2006-03-16T00:00:00Z",
+      "2020-02-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NGO",
+    "longitude": 136.80528,
+    "latitude": 34.858334
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_NKG.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2011-03-16T00:00:00Z",
+      "2018-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NKG",
+    "longitude": 118.86652,
+    "latitude": 31.735737
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_NRT.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-14T00:00:00Z",
+      "2018-09-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "NRT",
+    "longitude": 140.38744,
+    "latitude": 35.773212
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_ORD.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-06-15T00:00:00Z",
+      "2017-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ORD",
+    "longitude": -87.90488,
+    "latitude": 41.976913
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_PDX.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2004-01-16T00:00:00Z",
+      "2009-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PDX",
+    "longitude": -122.5929,
+    "latitude": 45.588997
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_PHL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2004-09-15T00:00:00Z",
+      "2014-02-14T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "PHL",
+    "longitude": -75.2433,
+    "latitude": 39.87641
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_SGN.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2005-06-15T00:00:00Z",
+      "2018-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "SGN",
+    "longitude": 106.662476,
+    "latitude": 10.813045
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_THR.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-02-14T00:00:00Z",
+      "2005-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "THR",
+    "longitude": 51.32187,
+    "latitude": 35.691532
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_TLV.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-11-15T00:00:00Z",
+      "2012-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "TLV",
+    "longitude": 34.870743,
+    "latitude": 32.000454
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_TPE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2012-07-16T00:00:00Z",
+      "2018-09-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "TPE",
+    "longitude": 121.22389,
+    "latitude": 25.07639
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_VIE.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-02-14T00:00:00Z",
+      "2016-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "VIE",
+    "longitude": 16.563583,
+    "latitude": 48.11972
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_WDH.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2005-12-16T00:00:00Z",
+      "2013-12-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "WDH",
+    "longitude": 17.463202,
+    "latitude": -22.487345
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_YUL.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-06-15T00:00:00Z",
+      "2017-04-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YUL",
+    "longitude": -73.74991,
+    "latitude": 45.457714
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_YVR.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2002-03-16T00:00:00Z",
+      "2015-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YVR",
+    "longitude": -123.17919,
+    "latitude": 49.1947
+  },
+  {
+    "title": "Monthly aggregated profile data of carbon monoxide mixing ratio",
+    "urls": "vp_monthly_means/CO_vp_monthly_YYZ.nc",
+    "ecv_variables": [
+      "Carbon Monoxide"
+    ],
+    "time_period": [
+      "2003-02-14T00:00:00Z",
+      "2017-11-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "CO_mean",
+      "CO_std",
+      "CO_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "YYZ",
+    "longitude": -79.61146,
+    "latitude": 43.681583
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_ATL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-05-16T00:00:00Z",
+      "2021-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "ATL",
+    "longitude": -84.44403,
+    "latitude": 33.640068
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_BKK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "2006-10-16T00:00:00Z",
+      "2019-06-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BKK",
+    "longitude": 100.752045,
+    "latitude": 13.693062
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_BOG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2018-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOG",
+    "longitude": -74.143135,
+    "latitude": 4.698602
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_BOS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-10-16T00:00:00Z",
+      "2019-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BOS",
+    "longitude": -71.02018,
+    "latitude": 42.36646
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_BRU.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1997-05-16T00:00:00Z",
+      "2009-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "BRU",
+    "longitude": 4.483602,
+    "latitude": 50.89717
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_CAI.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-08-16T00:00:00Z",
+      "2004-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CAI",
+    "longitude": 31.40647,
+    "latitude": 30.120106
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_CCS.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2017-10-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CCS",
+    "longitude": -67.00551,
+    "latitude": 10.596942
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_CDG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-08-16T00:00:00Z",
+      "2018-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CDG",
+    "longitude": 2.567023,
+    "latitude": 49.003197
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_CVG.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1997-05-16T00:00:00Z",
+      "2003-07-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "CVG",
+    "longitude": -84.66145,
+    "latitude": 39.0555
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DAL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1995-04-15T00:00:00Z",
+      "2017-05-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DAL",
+    "longitude": -96.85,
+    "latitude": 32.84391
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DEL.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1996-05-16T00:00:00Z",
+      "2020-08-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DEL",
+    "longitude": 77.10079,
+    "latitude": 28.556555
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DMK.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1994-11-15T00:00:00Z",
+      "2006-09-15T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DMK",
+    "longitude": 100.60667,
+    "latitude": 13.9125
+  },
+  {
+    "title": "Monthly aggregated profile data of ozone mixing ratio",
+    "urls": "vp_monthly_means/O3_vp_monthly_DTW.nc",
+    "ecv_variables": [
+      "Ozone"
+    ],
+    "time_period": [
+      "1999-07-16T00:00:00Z",
+      "2017-03-16T00:00:00Z"
+    ],
+    "RI": "IAGOS",
+    "vars": [
+      "O3_mean",
+      "O3_std",
+      "O3_max",
+      "day_nunique"
+    ],
+    "layer": [
+      "500m",
+      "PBL",
+      "FT",
+      "UT"
+    ],
+    "platform_id": "DTW",
+    "longitude": -83.35605,
+    "latitude": 42.20781
+  }
+]

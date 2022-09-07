@@ -288,8 +288,6 @@ def read_dataset_cnr(dataset_opendap_url, variables_list=[], temporal_extent=[No
     if spatial_extent[3] is not None:
       query = query + f'&latitude<={spatial_extent[3]}'
 
-  print(query)
-
   response = requests.get(query, verify=cnr_certificate_path)
 
   # No datasets for the query
@@ -386,5 +384,6 @@ if __name__ == "__main__":
   #print(get_list_platforms())
   #print(get_list_variables())
   #print(query_datasets(['Pressure (surface)', 'Ozone'], ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [-22, 37, 52, 88]))
-  print(read_dataset('https://data.iadc.cnr.it/erddap/tabledap/cct_meteo_d2', ['Pressure (surface)'],  [None,None], [None, None, None, None]))
+  print(read_dataset('https://metadata.iadc.cnr.it/geonetwork/srv/api/records/77556de7-c3ec-48f7-883e-6d9e6ad3c03c', ['Ozone'],  [None,None], [None, None, None, None]))
+ # print(read_dataset('https://thredds.met.no/thredds/fileServer/met.no/observations/stations/SN99754.nc',['Temperature (near surface)', 'Water Vapour (surface)', 'Pressure (surface)', 'Surface Wind Speed and direction'],  [None,None], [None, None, None, None]))
   #print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99938.nc', ['Pressure (surface)'],  ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [None, None, None, None]))

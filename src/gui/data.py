@@ -56,3 +56,7 @@ def get_selected_stations_dropdown(selected_stations_df, stations):
     labels = df['short_name'] + ' (' + df['long_name'] + ', ' + df['RI'] + ')'
     options = labels.rename('label').reset_index().rename(columns={'index': 'value'})
     return options.to_dict(orient='records'), list(options['value'])
+
+
+if __name__ == "__main__":
+    pass
