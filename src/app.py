@@ -8,6 +8,7 @@ import pandas as pd
 # Local imports
 import data_access
 import gui
+from data_access import query_actris
 
 # Dash imports; for documentation (including tutorial), see: https://dash.plotly.com/
 import dash
@@ -73,6 +74,7 @@ GANTT_VIEW_RADIO_ID = 'gantt-view-radio'
     # 'value' contains 'compact' or 'detailed'
 GANTT_GRAPH_ID = 'gantt-graph'
 TIMESERIES_GRAPH_ID = 'timeseries-graph'
+TIMESERIES_GRAPH_AEROSOLS_ID = 'timeseries-graph-aerosols'
     # 'figure' contains a Plotly figure object
 TIMESERIES_GRAPH_INFO_ID = 'plot_datasets-info'
 TIMESERIES_GRAPH_INFOTAB_ID = 'plot_datasets-infotab'
@@ -112,9 +114,18 @@ def get_description_table():
                             style={'height': '140px', 'display': 'block', 'margin': '0 auto'}
                 ),
                 href="https://www.actris.eu/", target="_blank"
-        )), 
-        html.Td("Information about datasets"), 
-        html.Td("Information about licences")])
+        )),         html.Td(children=[
+            html.Div("ACTRIS is the pan-European research infrastructure producing high-quality data and information on short-lived atmospheric constituents and on the processes leading to the variability of these constituents in natural and controlled atmospheres. ACTRIS data from observational National Facilities means the ACTRIS variables resulting from measurements that fully comply with the standard operating procedures (SOP), measurement recommendations, and quality guidelines established within ACTRIS."),
+            html.Div(children=[
+                html.Span("Other data from the EBAS repository ("), 
+                html.A(
+                    html.Span("https://ebas.nilu.no"),
+                    href="https://ebas.nilu.no", target="_blank"
+                    ),
+                html.Span(") is also available through this service."), 
+            ]),
+        ]), 
+        html.Td("ACTRIS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row2 = html.Tr([
         html.Td(
             html.A(
@@ -122,7 +133,7 @@ def get_description_table():
                             src=app.get_asset_url('logo_iagos.png'),
                             style={'width': '210px', 'display': 'block', 'margin': '0 auto'}
                 ),
-                        href="https://www.actris.eu/", target="_blank"
+                        href="https://iagos.aeris-data.fr/", target="_blank"
             )), 
         html.Td(children=[
             html.Div("The IAGOS datasets available are Level 3 data products derived from Level 2 products: Final quality controlled observational data."),
@@ -144,10 +155,10 @@ def get_description_table():
                             src=app.get_asset_url('logo_icos.png'),
                             style={'width': '210px', 'display': 'block', 'margin': '0 auto'}
                 ),
-                href="https://www.actris.eu/", target="_blank"
+                href="https://www.icos-cp.eu/", target="_blank"
             ), style={'text-align':'center'}), 
         html.Td("Information about datasets"), 
-        html.Td("Information about licences")])
+        html.Td("ICOS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row4 = html.Tr([
         html.Td(
             html.A(
@@ -155,7 +166,7 @@ def get_description_table():
                             src=app.get_asset_url('logo_sios.png'),
                             style={'height': '140px', 'display': 'block', 'margin': '0 auto'}
                 ),
-                        href="https://www.actris.eu/", target="_blank"
+                        href="https://sios-svalbard.org/", target="_blank"
             )), 
         html.Td("Information about datasets"), 
         html.Td("Information about licences")])
@@ -325,13 +336,15 @@ def get_dashboard_layout():
             style_cell={'textAlign': 'left'},
             markdown_options={'html': True},
         ),
-        
-        
                            
-        html.Div(id='plot_datasets-div', children=
-            dcc.Graph(
-                id=TIMESERIES_GRAPH_ID,
-            )
+        html.Div(id='plot_datasets-div', children=[
+                dcc.Graph(
+                    id=TIMESERIES_GRAPH_ID,
+                ),
+                dcc.Graph(
+                    id=TIMESERIES_GRAPH_AEROSOLS_ID,
+                ),
+            ]
         ),
     ]))
 
@@ -493,6 +506,7 @@ def change_tab(
 
 @app.callback(
     Output(TIMESERIES_GRAPH_ID, 'figure'),
+    Output(TIMESERIES_GRAPH_AEROSOLS_ID, 'figure'),
     Output("loading-output-2", "children"),
     #Output(DATASETS_PLOTTING_STORE_ID, 'data'),
     Output(TIMESERIES_GRAPH_INFOTAB_ID, 'columns'),
@@ -504,7 +518,6 @@ def change_tab(
 )
 def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, tab_id):
     trigger = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-    
     if datasets_json is None or not selected_row_ids or tab_id != PLOT_DATASETS_TAB_VALUE:
         raise PreventUpdate
 
@@ -514,27 +527,38 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
     table_data=[]
     datasets=[]
     figure = go.Figure()
+    figure2 = go.Figure()
     datasets_df = pd.read_json(datasets_json, orient='split', convert_dates=['time_period_start', 'time_period_end'])
     axes=[]
     i = 0
     for id in selected_row_ids:
         s = datasets_df.loc[id]
-        try:
-            ds = data_access.read_dataset(s['RI'], s['url'], s)
-            dd={}
-            dd['info'] = s 
-            dd['loaded'] = False 
-            print(ds)
-            if ds is not None and len(ds) != 0:
-                i=i+1
-                dd['loaded'] = True 
-                ds_vars = {}
-                ds_vars = [v for v in ds if ds[v].squeeze().ndim == 1]
+        #try:
+        pnsd = False
+        ds, dataset_id = data_access.read_dataset(s['RI'], s['url'], s)
+        print(dataset_id)
+        if s['RI'].lower() == "actris":
+            dss = data_access.get_dataset_from_cache(s['RI'], dataset_id)
+            if query_actris.test_particle_number_size_distribution(dss):
+                pnsd = True
+        dd={'info' : s, 'loaded': False} 
+        print(pnsd)
+        if ds is not None and len(ds) != 0:
+            i=i+1
+            dd['loaded'] = True 
+            ds_vars = [v for v in ds if ds[v].squeeze().ndim == 1]
+            if pnsd:
+                # opendap_url = [url['url'] for url in s['url'] if url['type'] == 'opendap'][0]
+                # figure2 = query_actris.get_contour_plot(query_actris.get_dataset(opendap_url))
+                figure2 = query_actris.get_contour_plot(dss)
+            else:    
                 if len(ds_vars) > 0:
-                    figure, axes=gui.add_trace(figure, ds, s['RI'], ds_vars, axes, str(i))
-            datasets.append(dd)
-        except Exception as e:
-            ds = None
+                        figure, axes=gui.add_trace(figure, ds, s['RI'], ds_vars, axes, str(i))
+        datasets.append(dd)
+        # except Exception as e:
+        #     print("ERROR")
+        #     print(str(e))
+        #     ds = None
     i = 1
     for dd in datasets:
         table_data.append({
@@ -548,7 +572,7 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
             })
         if dd['loaded']:
             i=i+1
-    return figure, "", table_columns, table_data
+    return figure, figure2, "", table_columns, table_data
 
 @app.callback(
     Output(GANTT_GRAPH_ID, 'figure'),

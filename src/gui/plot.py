@@ -282,7 +282,7 @@ def add_trace(fig, ds, ri, vs, axes, legend):
     fig.update_layout(
     {
         t.yaxis.replace("y", "yaxis"): {
-            "title": tempaxes[t.name],
+            "title": tempaxes[t.name[0:-4]],
             "overlaying": "y",
             "side": f"{'right' if (i % 2) != 0 else 'left'}",
             "position":1-(i/15)

@@ -13,6 +13,7 @@ from datetime import date
 import itertools
 import xarray as xr
 from mmappickle.dict import mmapdict
+import re
 
 from . import helper
 from . import query_actris
@@ -111,12 +112,12 @@ def _get_stations(ris=None):
                 for col in ['latitude', 'longitude', 'ground_elevation']:
                     stations_df[col] = pd.to_numeric(stations_df[col])
                 stations_dfs.append(stations_df)
-            elif ri == 'sios':
-                stations_df = stations_df.rename(columns={'URI': 'uri'})
-                stations_df['RI'] = 'SIOS'
-                stations_df['country'] = np.nan
-                stations_df['theme'] = np.nan
-                stations_dfs.append(stations_df)                
+            # elif ri == 'sios':
+            #     stations_df = stations_df.rename(columns={'URI': 'uri'})
+            #     stations_df['RI'] = 'SIOS'
+            #     stations_df['country'] = np.nan
+            #     stations_df['theme'] = np.nan
+            #     stations_dfs.append(stations_df)                
             else:
                 raise ValueError(f'ri={ri}')
         except Exception as e:
@@ -392,6 +393,14 @@ def filter_datasets_on_vars(datasets_df, var_codes):
     mask = datasets_df['var_codes'].apply(lambda vc: not var_codes.isdisjoint(vc))
     return datasets_df[mask]
 
+def generate_id(url):
+    return re.sub(r"[^a-z0-9]","",url.lower())
+
+def get_dataset_from_cache(ri, id):
+    cache_path = CACHE_DIR / f'data_{ri}.pkl'
+    m = mmapdict(str(cache_path))
+    return m[id]
+
 def read_dataset(ri, url, ds_metadata):
     if isinstance(url, (list, tuple)):
         #print("list_urls=" + str(url))
@@ -406,11 +415,11 @@ def read_dataset(ri, url, ds_metadata):
 
     if isinstance(url, dict):      
         print("dict_urls=" + str(url))
-        # if ri.lower() == "actris": # Only reading 'opendap' urls for ACTRIS.
-        #     if url['type'] != None and url['type'] != "opendap":
-        #         print('ACTRIS URL ignored, not opendap')
-        #         return None          
-        #
+        if ri.lower() == "actris": # Only reading 'opendap' urls for ACTRIS.
+            if url['type'] != None and url['type'] != "opendap":
+                print('ACTRIS URL ignored, not opendap')
+                return None          
+        
         # if ri.lower() == "sios": # Only reading 'opendap' urls for SIOS.
         #     if url['type'] != None and url['type'] != "opendap":
         #         print('SIOS URL ignored, not opendap')
@@ -424,22 +433,20 @@ def read_dataset(ri, url, ds_metadata):
     ri = ri.lower()
     
     # generating unique identifier for the dataset from URL, lower and removing special characters.
-    import re
-    dataset_id = re.sub(r"[^a-z0-9]","",url.lower())
+    dataset_id = generate_id(url)
     cache_path = CACHE_DIR / f'data_{ri}.pkl'
     m = mmapdict(str(cache_path))
     print(ds_metadata['ecv_variables_filtered'])
     if ri == 'actris':
         if dataset_id not in m:
-            ds = _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'])
-            if ds == None:
-                print("ACTRIS dataset couldn't be loaded")
-                return None          
+            ds = _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'])  
             ds = ds.load().copy()
+            if ds is None:
+                print("ACTRIS dataset couldn't be loaded")
+                return None        
             m[dataset_id] = ds
         else:
             ds = m[dataset_id]
-        print(ds)
     elif ri == 'icos':
         if dataset_id not in m:
             ds = _ri_query_module_by_ri[ri].read_dataset(url)
@@ -480,7 +487,7 @@ def read_dataset(ri, url, ds_metadata):
     if ds is not None:
         for v, da in ds.items():
             res[v] = da
-    return res
+    return res, dataset_id
         
 #! same order as in _RIs
 _GET_DATASETS_BY_RI.update(zip(_RIS, (_get_actris_datasets, _get_iagos_datasets, _get_icos_datasets, _get_sios_datasets)))

@@ -50,8 +50,8 @@ def get_list_platforms():
         jsonResponse = response.json()
         ret = []
         for item in jsonResponse:
-            if int(item['nb_profiles'] > 100):
-                station={ 'short_name': item['iata_code'], 'long_name': item['city'], 'longitude': item['position']['x'], 'latitude': item['position']['y'], 'altitude': item['altitude']  }
+            if int(item['nb_profiles'] > 100) and item['latitude'] < 71 and item['latitude'] > 27 and item['longitude'] < 62 and item['longitude'] > -26:
+                station={ 'short_name': item['iata_code'], 'long_name': item['city'], 'longitude': item['longitude'], 'latitude': item['latitude'], 'altitude': item['altitude']  }
                 ret.append(station)
         return ret    
     except HTTPError as http_err:
@@ -116,11 +116,11 @@ def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
     return ds
     
 if __name__ == "__main__":
-    #print(get_list_platforms())
+    print(get_list_platforms())
     #print(get_list_variables())
     #print(query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]))
-    for dataset in query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]):
-        print(dataset)
-        array = read_dataset(dataset, ['mole_fraction_of_carbon_monoxide_in_air'], None, None)
-        print(array['CO_PM'][0:10])
+    # for dataset in query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]):
+    #     print(dataset)
+    #     array = read_dataset(dataset, ['mole_fraction_of_carbon_monoxide_in_air'], None, None)
+    #     print(array['CO_PM'][0:10])
 

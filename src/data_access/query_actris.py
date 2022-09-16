@@ -1,5 +1,11 @@
 import requests
 import xarray as xr
+import netCDF4
+from netCDF4 import num2date
+import plotly.graph_objects as go
+from math import pi
+import numpy as np
+
 
 MAPPING_ECV2ACTRIS = {
     'Aerosol Optical Properties': ['aerosol.absorption.coefficient', 'aerosol.backscatter.coefficient', 'aerosol.backscatter.coefficient.hemispheric', 'aerosol.backscatter.ratio', 'aerosol.depolarisation.coefficient', 'aerosol.depolarisation.ratio', 'aerosol.extinction.coefficient', 'aerosol.extinction.ratio', 'aerosol.extinction.to.backscatter.ratio', 'aerosol.optical.depth', 'aerosol.optical.depth.550', 'aerosol.rayleigh.backscatter', 'aerosol.scattering.coefficient', 'volume.depolarization.ratio', 'cloud.condensation.nuclei.number.concentration'],
@@ -228,15 +234,98 @@ def read_dataset(url, variables):
 
     except BaseException:
         return None
+    
+def test_particle_number_size_distribution(dataset):
+    if 'particle_number_size_distribution_pm10_amean' in dataset.variables.keys() or 'particle_number_size_distribution_amean' in dataset.variables.keys()or  'particle_number_size_distribution' in dataset.variables.keys():
+        return True
+    else:
+        return False
+
+def gen_log_legend(z):
+    no_log=[]
+    z_step=(z.max() - z.min())/4
+    z_leg=np.arange(z.min(),z.max(),z_step)
+    z_leg=np.append(z_leg,z.max())
+    for t in z_leg:
+        n_log=10**t
+        if n_log < 10:
+            no_log.append(float('%.1g' % n_log)) #trick to make a nice legend
+        else:
+            no_log.append(float('%.2g' % n_log))
+    return z_leg,no_log
+
+def get_dataset(particle_number_size_distribution_data):
+    return netCDF4.Dataset(particle_number_size_distribution_data)
+
+def get_contour_plot(dataset):
+    if 'particle_number_size_distribution_pm10_amean' in dataset.variables.keys():
+        values = dataset['particle_number_size_distribution_pm10_amean']
+    elif 'particle_number_size_distribution_amean' in dataset.variables.keys():
+        values = dataset['particle_number_size_distribution_amean']
+    elif 'particle_number_size_distribution' in dataset.variables.keys():
+        values = dataset['particle_number_size_distribution']
+    else:
+        return {}
+    zz=[]
+    for arr in values:
+        for ver in arr:
+            if ver >0:
+                zz.append(np.log10(ver))
+            else:
+                zz.append(0)
+    z=np.reshape(zz,values.shape)
+    x = num2date(dataset.variables['time'][:],units='days since 1900-01-01 00:00:00',calendar='gregorian')
+    particle_diameter = dataset.variables['D'][:]
+
+    try:
+        title=dataset.ebas_instrument_type + " - " + dataset.ebas_component + " - {} - {}".format(dataset.ebas_matrix, dataset.ebas_station_name)
+    except:
+        try:
+            title=dataset.ebas_instrument_type + " - " + dataset.ebas_component + " - {}".format(dataset.ebas_station_name)
+        except:
+            try:
+                title=dataset.ebas_instrument_type + " - {}".format(dataset.ebas_station_name)
+            except:
+                try:
+                    title=dataset.title
+                except:
+                    title='Title not available'
+
+    #generate non-log legend:
+    z_leg,no_log = gen_log_legend(z)
+    fig = go.Figure(data=
+        go.Heatmap(
+            z=z,x=x,y=particle_diameter,
+            colorscale='jet',
+            zsmooth='best',
+            colorbar=dict(
+                title='dn/dlogDp (1/cm3)',
+                titleside='right',
+                tickvals=z_leg,
+                ticktext=no_log
+            )
+        )
+    )
+    fig.update_yaxes(type="log")
+    fig.update_layout(
+    title=title,
+    xaxis_title="Time",
+    yaxis_title="Particle Diameter /nm"
+)
+    #fig.show()
+    return fig
 
 if __name__ == "__main__":
     #b = query_datasets(variables=['Aerosol Physical Properties'],temporal_extent=['2000-01-01T00:00:00', '2022-01-10T00:00:00'],spatial_extent=[0, 0, 180, 90])
     #print(b)
-    ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
-    print(ret)
-    ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/DE0007R.20131231230000.20211123085808.high_vol_sampler.pm25_mass.pm25.7y.1d.DE03L_UBA_Ng_HVS_0002.DE28L_UBA_Sm_FWg_0001.lev2.nc", ['Aerosol Physical Properties'])
-    print(ret)
-    ret = read_dataset("https://thredds.nilu.no/thredds/fileServer/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
-    print(ret)
+    
+    #ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/NO0042G.20160506060000.20170505102504.dmps.particle_number_size_distribution.pm10.1y.1h.NO01L_DMPS_ZEP1_NRT.NO01L_dmps_DMPS_ZEP01..nc", ['Aerosol Physical Properties'])
+    ret = get_contour_plot(get_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/NO0042G.20160506060000.20170505102504.dmps.particle_number_size_distribution.pm10.1y.1h.NO01L_DMPS_ZEP1_NRT.NO01L_dmps_DMPS_ZEP01..nc"))
+    ret.show()
+    #print(ret)
+    # ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/DE0007R.20131231230000.20211123085808.high_vol_sampler.pm25_mass.pm25.7y.1d.DE03L_UBA_Ng_HVS_0002.DE28L_UBA_Sm_FWg_0001.lev2.nc", ['Aerosol Physical Properties'])
+    # print(ret)
+    # ret = read_dataset("https://thredds.nilu.no/thredds/fileServer/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
+    # print(ret)
     
     
