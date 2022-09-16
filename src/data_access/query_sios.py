@@ -7,7 +7,6 @@ from requests.exceptions import HTTPError
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-cnr_certificate_path = os.path.join(dir_path,'sios_cnr_certificate_chain.pem')
 
 #provide the list of platforms for the demonstrator
 def get_list_platforms():
@@ -182,7 +181,7 @@ def get_iadc_datasets():
     datasets = []
     endpoint = 'https://data.iadc.cnr.it/erddap/search/advanced.json'
     query = endpoint + '?searchFor=ENVRI'
-    response = requests.get(query, verify=cnr_certificate_path)
+    response = requests.get(query)
 
     table = response.json()['table']
     index = table['columnNames'].index('Dataset ID') # Perché il JSON è formattato così
@@ -222,7 +221,7 @@ def query_datasets_cnr(variables_list=[], temporal_extent=[None,None], spatial_e
 
   endpoint = 'https://data.iadc.cnr.it/erddap/search/advanced.json'
   query = endpoint + f'?searchFor=ENVRI&minLon={spatial_extent[0]}&minLat={spatial_extent[1]}&maxLon={spatial_extent[2]}&maxLat={spatial_extent[3]}&minTime={temporal_extent[0]}&maxTime={temporal_extent[1]}'
-  response = requests.get(query, verify=cnr_certificate_path)
+  response = requests.get(query)
 
   # No datasets for the query
   if response.status_code == 404:
@@ -288,7 +287,7 @@ def read_dataset_cnr(dataset_opendap_url, variables_list=[], temporal_extent=[No
     if spatial_extent[3] is not None:
       query = query + f'&latitude<={spatial_extent[3]}'
 
-  response = requests.get(query, verify=cnr_certificate_path)
+  response = requests.get(query)
 
   # No datasets for the query
   if response.status_code == 404:
@@ -313,7 +312,7 @@ def get_reverse_var_map():
 
 def get_metadata_from_dataset(datasetID):
   query = f'https://data.iadc.cnr.it/erddap/info/{datasetID}/index.json'
-  response = requests.get(query, verify=cnr_certificate_path)
+  response = requests.get(query)
 
   table = response.json()['table']
     
@@ -333,7 +332,7 @@ def get_metadata_from_dataset(datasetID):
 def get_standard_names_from_dataset(datasetID):
   standard_names=[]
   query = f'https://data.iadc.cnr.it/erddap/info/{datasetID}/index.json'
-  response = requests.get(query, verify=cnr_certificate_path)
+  response = requests.get(query)
 
   table = response.json()['table']
     
@@ -351,7 +350,7 @@ def get_standard_names_from_dataset(datasetID):
 def get_erddap_variables_from_ecv_list(datasetID, variable_list):
   erddap_variables = []
   query = f'https://data.iadc.cnr.it/erddap/info/{datasetID}/index.json'
-  response = requests.get(query, verify=cnr_certificate_path)
+  response = requests.get(query)
 
   if response.status_code == 404:
     return erddap_variables
@@ -384,6 +383,7 @@ if __name__ == "__main__":
   #print(get_list_platforms())
   #print(get_list_variables())
   #print(query_datasets(['Pressure (surface)', 'Ozone'], ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [-22, 37, 52, 88]))
-  print(read_dataset('https://metadata.iadc.cnr.it/geonetwork/srv/api/records/77556de7-c3ec-48f7-883e-6d9e6ad3c03c', ['Ozone'],  [None,None], [None, None, None, None]))
- # print(read_dataset('https://thredds.met.no/thredds/fileServer/met.no/observations/stations/SN99754.nc',['Temperature (near surface)', 'Water Vapour (surface)', 'Pressure (surface)', 'Surface Wind Speed and direction'],  [None,None], [None, None, None, None]))
+  print(read_dataset('https://data.iadc.cnr.it/erddap/tabledap/ozone-barentsburg', ['Ozone'],  [None,None], [None, None, None, None]))
+  #print(read_dataset('https://thredds.met.no/thredds/fileServer/met.no/observations/stations/SN99754.nc',['Temperature (near surface)', 'Water Vapour (surface)', 'Pressure (surface)', 'Surface Wind Speed and direction'],  [None,None], [None, None, None, None]))
   #print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99938.nc', ['Pressure (surface)'],  ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [None, None, None, None]))
+  #print(get_iadc_datasets())
