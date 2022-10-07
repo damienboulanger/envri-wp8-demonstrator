@@ -383,7 +383,7 @@ if __name__ == "__main__":
   #print(get_list_platforms())
   #print(get_list_variables())
   #print(query_datasets(['Pressure (surface)', 'Ozone'], ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [-22, 37, 52, 88]))
-  print(read_dataset('https://data.iadc.cnr.it/erddap/tabledap/ozone-barentsburg', ['Ozone'],  [None,None], [None, None, None, None]))
+  print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99720.nc', ['Ozone'],  [None,None], [None, None, None, None]))
   #print(read_dataset('https://thredds.met.no/thredds/fileServer/met.no/observations/stations/SN99754.nc',['Temperature (near surface)', 'Water Vapour (surface)', 'Pressure (surface)', 'Surface Wind Speed and direction'],  [None,None], [None, None, None, None]))
   #print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99938.nc', ['Pressure (surface)'],  ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [None, None, None, None]))
   #print(get_iadc_datasets())

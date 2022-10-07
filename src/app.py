@@ -521,9 +521,11 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
     if datasets_json is None or not selected_row_ids or tab_id != PLOT_DATASETS_TAB_VALUE:
         raise PreventUpdate
 
-    titles_ids=["dataset", "ri", "station", "status", "legend", "link"]
-    titles=["Dataset", "RI", "Station", "Loading status", "Legend", "Link"]
+    titles_ids=["dataset", "ri", "station", "status", "legend"]
+    titles=["Dataset", "RI", "Station", "Loading status", "Legend"]
     table_columns = [{'name': name, 'id': i} for name, i in zip(titles, titles_ids)]
+    table_columns.append({'name': "Download link", 'id': "link", 'presentation': 'markdown'})
+    print(table_columns)
     table_data=[]
     datasets=[]
     figure = go.Figure()
@@ -536,13 +538,10 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
         #try:
         pnsd = False
         ds, dataset_id = data_access.read_dataset(s['RI'], s['url'], s)
-        print(dataset_id)
         if s['RI'].lower() == "actris":
             dss = data_access.get_dataset_from_cache(s['RI'], dataset_id)
-            if query_actris.test_particle_number_size_distribution(dss):
-                pnsd = True
+            pnsd = query_actris.test_particle_number_size_distribution(dss)
         dd={'info' : s, 'loaded': False} 
-        print(pnsd)
         if ds is not None and len(ds) != 0:
             i=i+1
             dd['loaded'] = True 
@@ -561,6 +560,18 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
         #     ds = None
     i = 1
     for dd in datasets:
+        link = None
+        print(dd['info']['url'])
+        if isinstance(dd['info']['url'], str):
+            link = dd['info']['url']
+        else:
+            link = [d for d in dd['info']['url'] if d['type'] == 'landing_page']
+            if len(link) == 0:
+                link = [d for d in dd['info']['url'] if d['type'] == 'data_file']
+                if len(link) == 0:
+                    link = [d for d in dd['info']['url'] if d['type'] == 'opendap']
+            if len(link) == 1:
+                link = link[0]['url']
         table_data.append({
             "id": i, 
             "dataset": dd['info']['title'], 
@@ -568,7 +579,7 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
             "station": dd['info']['platform_id'], 
             "status":  "Loading ok" if dd['loaded'] else "dataset coulnd't be loaded", 
             "legend":  "("+str(i)+")" if dd['loaded'] else "", 
-            "link": str(dd['info']['url'])
+            "link": link
             })
         if dd['loaded']:
             i=i+1

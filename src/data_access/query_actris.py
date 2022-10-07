@@ -316,16 +316,16 @@ def get_contour_plot(dataset):
     return fig
 
 if __name__ == "__main__":
+    pass
     #b = query_datasets(variables=['Aerosol Physical Properties'],temporal_extent=['2000-01-01T00:00:00', '2022-01-10T00:00:00'],spatial_extent=[0, 0, 180, 90])
     #print(b)
     
     #ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/NO0042G.20160506060000.20170505102504.dmps.particle_number_size_distribution.pm10.1y.1h.NO01L_DMPS_ZEP1_NRT.NO01L_dmps_DMPS_ZEP01..nc", ['Aerosol Physical Properties'])
-    ret = get_contour_plot(get_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/NO0042G.20160506060000.20170505102504.dmps.particle_number_size_distribution.pm10.1y.1h.NO01L_DMPS_ZEP1_NRT.NO01L_dmps_DMPS_ZEP01..nc"))
-    ret.show()
+    #ret = get_contour_plot(get_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/NO0042G.20160506060000.20170505102504.dmps.particle_number_size_distribution.pm10.1y.1h.NO01L_DMPS_ZEP1_NRT.NO01L_dmps_DMPS_ZEP01..nc"))
+    #ret.show()
     #print(ret)
     # ret = read_dataset("http://thredds.nilu.no/thredds/dodsC/ebas/DE0007R.20131231230000.20211123085808.high_vol_sampler.pm25_mass.pm25.7y.1d.DE03L_UBA_Ng_HVS_0002.DE28L_UBA_Sm_FWg_0001.lev2.nc", ['Aerosol Physical Properties'])
     # print(ret)
     # ret = read_dataset("https://thredds.nilu.no/thredds/fileServer/ebas/FR0022R.20120101090000.20210714000000.TEOM.pm10_mass.pm10.9y.1d.FR11L_OPE_teom_1405DF_pm10.FR11L_teom.lev2.nc", ['Aerosol Physical Properties'])
     # print(ret)
-    
     

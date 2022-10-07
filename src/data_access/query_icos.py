@@ -14,6 +14,9 @@ https://gcos.wmo.int/en/essential-climate-variables/ghg/ecv-requirements
 '''
 
 import pandas as pd
+import xarray as xr
+import warnings
+warnings.filterwarnings("ignore")
 
 from icoscp.station import station
 from icoscp.cpb.dobj import Dobj
@@ -174,14 +177,13 @@ def query_datasets(variables=[], temporal=[], spatial=[]):
     time_period: time period covered by the dataset
     platform_id: id of the station (i.e. identical to short_name of the platform return by method get_list_platforms())
 
-    If there ae no results an empty list is returned
+    If there are no results an empty list is returned
     """
     stn = station.getIdList()
-    stn = stn[stn['theme'] == 'AS']
+    stn = stn[(stn['theme'] == 'AS') & (stn['icosClass'].isin(['1', '2', 'Associated']))]
     dtypes = ['str', 'str', 'str', 'str', 'float', 'float', 'float', 'str', 'str']
     dtype = dict(zip(stn.columns.tolist(), dtypes))
-
-    # get all datasets and convert dtype    
+    # get all datasets and convert dtype
     dataset = __sparql_data()
     dtypes = ['str', 'str', 'str', 'str', 'int', 'datetime64', 'datetime64', 'datetime64']
     dtype = dict(zip(dataset.columns.tolist(), dtypes))
@@ -292,8 +294,29 @@ def __sparql_data():
 
 
 def read_dataset(pid):
-    data = Dobj(pid).data
-    return data.to_xarray()
+    digital_object = Dobj(pid)
+    # Get data & meta-data of the digital object.
+    data_df, meta_data = digital_object.data, digital_object.info
+    # In case of empty data or meta-data return an empty dataset.
+    if data_df is None or meta_data is None:
+        return xr.Dataset()
+    # Initiate a dataset from the `data_df` dataframe.
+    dataset = xr.Dataset.from_dataframe(data_df)
+    # Loop over the variables in the meta-data.
+    for variable_dict in meta_data['specificInfo']['columns']:
+        attributes = dict()
+        variable_name = variable_dict['label']
+        # Extract 'label' meta-data.
+        attributes['label'] = variable_dict['valueType']['self']['label']
+        # Some variables do not come with units.
+        if 'unit' in variable_dict['valueType'].keys():
+            # Extract 'units' meta-data.
+            attributes['units'] = variable_dict['valueType']['unit']
+        # Update the variables' attributes of the initialized dataset
+        # in-place. Each extracted meta-data value will be a new
+        # attribute under the corresponding variable.
+        dataset[variable_name] = dataset[variable_name].assign_attrs(attributes)
+    return dataset
 
 
 if __name__ == "__main__":
@@ -305,4 +328,3 @@ if __name__ == "__main__":
     # print(pids)
     # data = read_dataset(pids[0])
     # print(data.head())
-

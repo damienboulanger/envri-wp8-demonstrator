@@ -112,12 +112,12 @@ def _get_stations(ris=None):
                 for col in ['latitude', 'longitude', 'ground_elevation']:
                     stations_df[col] = pd.to_numeric(stations_df[col])
                 stations_dfs.append(stations_df)
-            # elif ri == 'sios':
-            #     stations_df = stations_df.rename(columns={'URI': 'uri'})
-            #     stations_df['RI'] = 'SIOS'
-            #     stations_df['country'] = np.nan
-            #     stations_df['theme'] = np.nan
-            #     stations_dfs.append(stations_df)                
+            elif ri == 'sios':
+                stations_df = stations_df.rename(columns={'URI': 'uri'})
+                stations_df['RI'] = 'SIOS'
+                stations_df['country'] = np.nan
+                stations_df['theme'] = np.nan
+                stations_dfs.append(stations_df)                
             else:
                 raise ValueError(f'ri={ri}')
         except Exception as e:
@@ -414,16 +414,16 @@ def read_dataset(ri, url, ds_metadata):
         return ds
 
     if isinstance(url, dict):      
-        print("dict_urls=" + str(url))
+        #print("dict_urls=" + str(url))
         if ri.lower() == "actris": # Only reading 'opendap' urls for ACTRIS.
             if url['type'] != None and url['type'] != "opendap":
                 print('ACTRIS URL ignored, not opendap')
                 return None          
         
-        # if ri.lower() == "sios": # Only reading 'opendap' urls for SIOS.
-        #     if url['type'] != None and url['type'] != "opendap":
-        #         print('SIOS URL ignored, not opendap')
-        #         return None          
+        if ri.lower() == "sios": # Only reading 'opendap' urls for SIOS.
+            if url['type'] != None and url['type'] != "opendap":
+                print('SIOS URL ignored, not opendap')
+                return None          
         return read_dataset(ri, url['url'], ds_metadata)
 
     if not isinstance(url, str):
@@ -467,6 +467,9 @@ def read_dataset(ri, url, ds_metadata):
             m[dataset_id] = ds
         else:
             ds = m[dataset_id]
+        if not ds.coords: # some files don't have coordinates
+            ds = ds.set_coords('time')
+            ds = ds.drop_vars(['latitude', "longitude", 'station_id'])
     elif ri == 'iagos':
         data_path = pathlib.Path(pkg_resources.resource_filename('data_access', 'resources/iagos_L3_postprocessed'))
         ds = xr.open_dataset(data_path / url)
