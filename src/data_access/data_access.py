@@ -28,7 +28,6 @@ logger = logging.getLogger(__name__)
 
 
 # for caching purposes
-# TODO: do it properly
 _stations = None
 _variables = None
 
@@ -403,9 +402,6 @@ def get_dataset_from_cache(ri, id):
 
 def read_dataset(ri, url, ds_metadata):
     if isinstance(url, (list, tuple)):
-        #print("list_urls=" + str(url))
-        #if len(url) > 1:
-        #    print("Multiple urls for this dataset")
         ds = None
         for single_url in url:
             ds = read_dataset(ri, single_url, ds_metadata)
@@ -414,7 +410,6 @@ def read_dataset(ri, url, ds_metadata):
         return ds
 
     if isinstance(url, dict):      
-        #print("dict_urls=" + str(url))
         if ri.lower() == "actris": # Only reading 'opendap' urls for ACTRIS.
             if url['type'] != None and url['type'] != "opendap":
                 print('ACTRIS URL ignored, not opendap')
@@ -429,14 +424,12 @@ def read_dataset(ri, url, ds_metadata):
     if not isinstance(url, str):
         raise ValueError(f'url must be str; got: {url} of type={type(url)}')
 
-    print("single url=" + str(url))  
     ri = ri.lower()
     
     # generating unique identifier for the dataset from URL, lower and removing special characters.
     dataset_id = generate_id(url)
     cache_path = CACHE_DIR / f'data_{ri}.pkl'
     m = mmapdict(str(cache_path))
-    print(ds_metadata['ecv_variables_filtered'])
     if ri == 'actris':
         if dataset_id not in m:
             ds = _ri_query_module_by_ri[ri].read_dataset(url, ds_metadata['ecv_variables_filtered'])  

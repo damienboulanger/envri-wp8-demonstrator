@@ -3,3 +3,4 @@
 .ipynb_checkpoints
 .pylint.d
 __pycache__
+/environment2.yml

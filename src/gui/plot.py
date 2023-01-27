@@ -39,6 +39,8 @@ def get_stations_map(map_id, stations):
     See: https://dash.plotly.com/dash-core-components/graph
     :return: dash.dcc.Graph object
     """
+    import plotly
+    
     fig = px.scatter_mapbox(
         stations,
         lat="latitude", lon="longitude", color='RI',
@@ -52,6 +54,7 @@ def get_stations_map(map_id, stations):
         zoom=2.3,
         title='Stations map',
     )
+    fig.update_traces(cluster=dict(enabled=True, color="red", opacity=0.7))
     fig.update_layout(
         mapbox_style="open-street-map",
         margin={'r': 0, 't': 40, 'l': 0, 'b': 0},
@@ -109,7 +112,7 @@ def get_timeline_by_station(datasets_df):
     no_platforms = len(df['platform_id_RI'].unique())
     height = 100 + max(100, 50 + 30 * no_platforms)
     gantt = px.timeline(
-        df, x_start='time_period_start', x_end='time_period_end', y='platform_id_RI', color='RI',
+        df, x_start='time_period_start', x_end='time_period_end', y='station_fullname', color='RI',
         hover_name='var_codes',
         hover_data={'station_fullname': True, 'platform_id_RI': True, 'datasets': True, 'RI': False},
         custom_data=['indices'],

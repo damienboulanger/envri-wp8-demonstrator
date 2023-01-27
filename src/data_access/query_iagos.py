@@ -117,10 +117,4 @@ def read_dataset(dataset_id, variables_list, temporal_extent, spatial_extent):
     
 if __name__ == "__main__":
     print(get_list_platforms())
-    #print(get_list_variables())
-    #print(query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]))
-    # for dataset in query_datasets(['Carbon monoxide'], ['2003-03-01T03:00:00','2003-04-01T03:00:00'], [0, 0, 17, 13]):
-    #     print(dataset)
-    #     array = read_dataset(dataset, ['mole_fraction_of_carbon_monoxide_in_air'], None, None)
-    #     print(array['CO_PM'][0:10])
 

@@ -20,6 +20,8 @@ import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 import plotly.graph_objects as go
 
+from utils import charts
+
 # Provides a version of Dash application which can be run in Jupyter notebook/lab
 # See: https://github.com/plotly/jupyter-dash
 from jupyter_dash import JupyterDash
@@ -74,7 +76,6 @@ GANTT_VIEW_RADIO_ID = 'gantt-view-radio'
     # 'value' contains 'compact' or 'detailed'
 GANTT_GRAPH_ID = 'gantt-graph'
 TIMESERIES_GRAPH_ID = 'timeseries-graph'
-TIMESERIES_GRAPH_AEROSOLS_ID = 'timeseries-graph-aerosols'
     # 'figure' contains a Plotly figure object
 TIMESERIES_GRAPH_INFO_ID = 'plot_datasets-info'
 TIMESERIES_GRAPH_INFOTAB_ID = 'plot_datasets-infotab'
@@ -89,6 +90,7 @@ QUICKLOOK_POPUP_ID = 'quicklook-popup'
 # Maximum number of variables comparable at the same time.
 MODAL_MAX_VARIABLES_ID="modal-max-variables"
 MAX_VARIABLES=3
+MODAL_DISCLAIMER_ID="modal-disclaimer"
 
 # Atmo-Access logo url
 ATMO_ACCESS_LOGO_URL = \
@@ -156,8 +158,12 @@ def get_description_table():
                             style={'width': '210px', 'display': 'block', 'margin': '0 auto'}
                 ),
                 href="https://www.icos-cp.eu/", target="_blank"
-            ), style={'text-align':'center'}), 
-        html.Td("Information about datasets"), 
+            ), style={'text-align':'center'}),
+        html.Td(children=[
+            html.Div("ICOS data are from the atmospheric network of ICOS Research Infrastructure for 36 stations and 90 vertical levels."),
+            html.Div("The collection used contains the final quality controlled hourly averaged data for the mole fractions of CO2, CH4, N2O, CO and meteorological observations measured at the relevant vertical levels of the measurements stations."),
+            html.Div("All stations follow the ICOS Atmospheric Station specification V2.0 (doi:10.18160/GK28-218) and are certified as ICOS atmospheric stations Class I or II. Data processing has been performed as described in Hazan et al., 2016"),            
+        ]), 
         html.Td("ICOS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row4 = html.Tr([
         html.Td(
@@ -168,8 +174,8 @@ def get_description_table():
                 ),
                         href="https://sios-svalbard.org/", target="_blank"
             )), 
-        html.Td("Information about datasets"), 
-        html.Td("Information about licences")])
+        html.Td("Data tagged as SIOS for this demonstrator are quality controlled timeseries from Norwegian weather stations, as provided by the Norwegian Meteorological Institute, and other stations in Svalbard region, as provided by the Norwegian Institute for Air Research, the Norwegian Polar Institute and the Italian Institute of Polar Sciences."), 
+        html.Td("Data from the Norwegian Meteorological Institute are licensed under the Creative Commons 4.0 BY (CC-BY-4.0). Data from Italian Institute of Polar Sciences and EXAODEP-2020 participants are licensed under Non-commercial Creative Commons 4.0 (CC-BY-NC-4.0).")])
     
     table_body = [html.Tbody([row1, row2, row3, row4])]
     
@@ -288,7 +294,7 @@ def get_dashboard_layout():
         html.Div(id='select-datasets-main-panel-div', className='twelve columns', children=[
             dcc.Graph(
                 id=GANTT_GRAPH_ID,
-                style={'height':800}
+                #style={'height':800}
             ),
             dbc.Switch(
                 id=DATASETS_TABLE_CHECKLIST_ALL_NONE_SWITCH_ID,
@@ -341,16 +347,10 @@ def get_dashboard_layout():
                 dcc.Graph(
                     id=TIMESERIES_GRAPH_ID,
                 ),
-                dcc.Graph(
-                    id=TIMESERIES_GRAPH_AEROSOLS_ID,
-                ),
             ]
         ),
     ]))
 
-    colocation_tab = dcc.Tab(label='Colocate with satellite data', value=COLOCATION_TAB_VALUE)
-
-    #mockup_remaining_tabs = _get_mockup_remaining_tabs()
 
     app_tabs = dcc.Tabs(id=APP_TABS_ID, value=SEARCH_DATASETS_TAB_VALUE,
                         children=[
@@ -358,7 +358,6 @@ def get_dashboard_layout():
                             stations_vars_tab,
                             select_datasets_tab,
                             plot_data_tab,
-                            colocation_tab,
                         ])
 
     layout = html.Div(id='app-container-div', style={'margin': '30px', 'padding-bottom': '50px'}, children=stores + [
@@ -377,22 +376,31 @@ def get_dashboard_layout():
             ),
             dbc.Modal(
                 [
-                    dbc.ModalHeader(dbc.ModalTitle("Header")),
+                    dbc.ModalHeader(dbc.ModalTitle("Caution")),
                     dbc.ModalBody("You can't select more than " + str(MAX_VARIABLES) + " datasets at a time."),
                 ],
                 id=MODAL_MAX_VARIABLES_ID,
                 size="sm",
                 is_open=False,
             ),
+            dbc.Modal(
+                [
+                    dbc.ModalHeader(dbc.ModalTitle("Disclaimer")),
+                    dbc.ModalBody("By deploying this demonstrator from https://github.com/iagos-dc/envri-fair-atmospheric-demonstrator you agree to the data usage licenses of ACTRIS, IAGOS, ICOS and SIOS Research Infrastructures described in the Information tab."),
+                    dbc.ModalFooter(
+                        dbc.Button(
+                        "Close", id="close", className="ms-auto", n_clicks=0
+                        )
+                    ),
+                ],
+                id=MODAL_DISCLAIMER_ID,
+                size="lg",
+                is_open=True,
+            ),
         ])
     ])
 
     return layout
-
-def _get_mockup_remaining_tabs():
-    download_tab = dcc.Tab(label='Download datasets', value='download-tab')
-    #return [plot_data_tab, colocation_tab, download_tab]
-    return []
 
 # End of definition of routines which constructs components of the dashboard
 
@@ -402,6 +410,16 @@ app.layout = get_dashboard_layout()
 # Begin of callback definitions and their helper routines.
 # See: https://dash.plotly.com/basic-callbacks for a basic tutorial and
 # https://dash.plotly.com/  -->  Dash Callback in left menu for more detailed documentation
+
+@app.callback(
+    Output(MODAL_DISCLAIMER_ID, "is_open"),
+    Input("close", "n_clicks"),
+)
+def toggle_modal(n1):
+    if n1 > 0:
+        return False
+    else:
+        return True
 
 @app.callback(
     Output(VARIABLES_CHECKLIST_ID, 'value'),
@@ -506,7 +524,6 @@ def change_tab(
 
 @app.callback(
     Output(TIMESERIES_GRAPH_ID, 'figure'),
-    Output(TIMESERIES_GRAPH_AEROSOLS_ID, 'figure'),
     Output("loading-output-2", "children"),
     #Output(DATASETS_PLOTTING_STORE_ID, 'data'),
     Output(TIMESERIES_GRAPH_INFOTAB_ID, 'columns'),
@@ -521,18 +538,17 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
     if datasets_json is None or not selected_row_ids or tab_id != PLOT_DATASETS_TAB_VALUE:
         raise PreventUpdate
 
-    titles_ids=["dataset", "ri", "station", "status", "legend"]
-    titles=["Dataset", "RI", "Station", "Loading status", "Legend"]
+    titles_ids=["dataset", "ri", "station", "stationcode", "legend"] #, "status"
+    titles=["Dataset", "RI", "Station", "Station code", "Legend"] #, "Loading status"
     table_columns = [{'name': name, 'id': i} for name, i in zip(titles, titles_ids)]
     table_columns.append({'name': "Download link", 'id': "link", 'presentation': 'markdown'})
-    print(table_columns)
     table_data=[]
     datasets=[]
-    figure = go.Figure()
-    figure2 = go.Figure()
+    #figure = go.Figure()
     datasets_df = pd.read_json(datasets_json, orient='split', convert_dates=['time_period_start', 'time_period_end'])
     axes=[]
     i = 0
+    dfs={}
     for id in selected_row_ids:
         s = datasets_df.loc[id]
         #try:
@@ -547,21 +563,27 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
             dd['loaded'] = True 
             ds_vars = [v for v in ds if ds[v].squeeze().ndim == 1]
             if pnsd:
+                # Ignore 2D data for ACTRIS.
                 # opendap_url = [url['url'] for url in s['url'] if url['type'] == 'opendap'][0]
                 # figure2 = query_actris.get_contour_plot(query_actris.get_dataset(opendap_url))
-                figure2 = query_actris.get_contour_plot(dss)
+                #figure2 = query_actris.get_contour_plot(dss)
+                pass
             else:    
                 if len(ds_vars) > 0:
-                        figure, axes=gui.add_trace(figure, ds, s['RI'], ds_vars, axes, str(i))
+                    for v in ds_vars:
+                        da = ds[v]
+                        units=da.attrs['units'] if 'units' in da.attrs else "no units"
+                        dfs[v + ' (' + str(i) + ') - ' + units] = ds[v].to_series()
+            
         datasets.append(dd)
-        # except Exception as e:
-        #     print("ERROR")
-        #     print(str(e))
-        #     ds = None
+    figure=charts.multi_line(dfs)
+    charts.add_watermark(figure)
+    figure.update_layout(
+        legend=dict(orientation='h', title='Variables')
+    )
     i = 1
     for dd in datasets:
         link = None
-        print(dd['info']['url'])
         if isinstance(dd['info']['url'], str):
             link = dd['info']['url']
         else:
@@ -572,18 +594,20 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
                     link = [d for d in dd['info']['url'] if d['type'] == 'opendap']
             if len(link) == 1:
                 link = link[0]['url']
+        print(dd['info'])
         table_data.append({
             "id": i, 
             "dataset": dd['info']['title'], 
             "ri": dd['info']['RI'], 
-            "station": dd['info']['platform_id'], 
-            "status":  "Loading ok" if dd['loaded'] else "dataset coulnd't be loaded", 
+            "station": dd['info']['platform_name'], 
+            "stationcode": dd['info']['platform_id'], 
+            #"status":  "Loading ok" if dd['loaded'] else "dataset coulnd't be loaded", 
             "legend":  "("+str(i)+")" if dd['loaded'] else "", 
-            "link": link
+            "link": "<a href='"+link+"' target='_blank'>"+link+"</a>"    
             })
         if dd['loaded']:
             i=i+1
-    return figure, figure2, "", table_columns, table_data
+    return figure, "", table_columns, table_data
 
 @app.callback(
     Output(GANTT_GRAPH_ID, 'figure'),
@@ -603,7 +627,7 @@ def get_gantt_figure(gantt_view_type, datasets_json, tab_id):
     datasets_df = datasets_df.join(station_by_shortnameRI['station_fullname'], on='platform_id_RI')  # column 'station_fullname' joined to datasets_df
 
     if len(datasets_df) == 0:
-       return {}, selectedData   # empty figure; TODO: is it a right way?
+       return {}, selectedData   
 
     if gantt_view_type == 'compact':
         fig = gui.get_timeline_by_station(datasets_df)
@@ -698,7 +722,7 @@ def popup_graphs(active_cell, datasets_json):
     _tmp_dataset = s
 
     try:
-        ds = data_access.read_dataset(s['RI'], s['url'], s)
+        ds, dataset_id = data_access.read_dataset(s['RI'], s['url'], s)
         ds_exc = None
     except Exception as e:
         ds = None
@@ -709,9 +733,16 @@ def popup_graphs(active_cell, datasets_json):
     if ds is not None:
         ds_vars = [v for v in ds if ds[v].squeeze().ndim == 1]
         if len(ds_vars) > 0:
+            df = {v: ds[v].to_series() for v in ds_vars}
+            
+            fig=charts.multi_line(df)
+            charts.add_watermark(fig)
+            fig.update_layout(
+                legend=dict(orientation='h', title='Variables')
+            )
             ds_plot = dcc.Graph(
                 id='quick-plot',
-                figure=gui.plot_vars(ds, ds_vars[0], ds_vars[1] if len(ds_vars) > 1 else None)
+                figure=fig
             )
         else:
             ds_plot = None

@@ -8,7 +8,6 @@ def get_station_by_shortnameRI(stations):
 
 def get_std_variables(variables):
     std_vars = variables[['std_ECV_name', 'code']].drop_duplicates()
-    # TODO: temporary
     try:
         std_vars = std_vars[std_vars['std_ECV_name'] != 'Aerosol Optical Properties']
     except ValueError:
