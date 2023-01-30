@@ -48,7 +48,11 @@ def read_dataset(dataset_id,variables_list=[], temporal_extent=[None,None], spat
   if ("iadc.cnr.it" in dataset_opendap_url):
     dataset = read_dataset_cnr(dataset_id, variables_list, temporal_extent, spatial_extent)
   
-  return dataset
+  # swap dimension from row to time.
+  if "row" in dataset.dims:
+      return dataset.swap_dims({"row":"time"})
+  else:
+      return dataset
 
 
 
@@ -288,13 +292,11 @@ def read_dataset_cnr(dataset_opendap_url, variables_list=[], temporal_extent=[No
       query = query + f'&latitude<={spatial_extent[3]}'
 
   response = requests.get(query)
-
   # No datasets for the query
   if response.status_code == 404:
     return None
 
   ds_disk = xr.open_dataset(response.content)
-
   return ds_disk
 
 ### Utils ###        
@@ -382,8 +384,9 @@ def get_erddap_variables_from_ecv_list(datasetID, variable_list):
 if __name__ == "__main__":
   #print(get_list_platforms())
   #print(get_list_variables())
-  #print(query_datasets(['Pressure (surface)', 'Ozone'], ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [-22, 37, 52, 88]))
-  print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99720.nc', ['Ozone'],  [None,None], [None, None, None, None]))
+  #print(query_datasets(['Ozone'], ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [-22, 37, 52, 88]))
+  print(read_dataset('https://data.iadc.cnr.it/erddap/tabledap/ozone-barentsburg', ['Ozone']))
+  #print(read_dataset('https://data.iadc.cnr.it/erddap/tabledap/ozone-barentsburg.nc', ['Ozone']))
   #print(read_dataset('https://thredds.met.no/thredds/fileServer/met.no/observations/stations/SN99754.nc',['Temperature (near surface)', 'Water Vapour (surface)', 'Pressure (surface)', 'Surface Wind Speed and direction'],  [None,None], [None, None, None, None]))
   #print(read_dataset('https://thredds.met.no/thredds/dodsC/met.no/observations/stations/SN99938.nc', ['Pressure (surface)'],  ['2009-09-20T00:00:00Z','2021-09-20T00:00:00Z'], [None, None, None, None]))
   #print(get_iadc_datasets())

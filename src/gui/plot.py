@@ -138,12 +138,13 @@ def get_timeline_by_station_and_vars(datasets_df):
     no_var_codes_filtered = len(df['var_codes_filtered'].unique())
     no_facet_rows = (no_var_codes_filtered + facet_col_wrap - 1) // facet_col_wrap
     height = 100 + max(100, 50 + 25 * no_platforms) * no_facet_rows
+    df['Variables'] = df.pop('var_codes_filtered')
     gantt = px.timeline(
-        df, x_start='time_period_start', x_end='time_period_end', y='platform_id_RI', color='var_codes_filtered',
+        df, x_start='time_period_start', x_end='time_period_end', y='station_fullname', color='Variables',
         hover_name='station_fullname',
-        hover_data={'station_fullname': True, 'platform_id_RI': True, 'var_codes_filtered': True, 'datasets': True},
+        hover_data={'station_fullname': True, 'platform_id_RI': True, 'Variables': True, 'datasets': True},
         custom_data=['indices'],
-        height=height, facet_col='var_codes_filtered', facet_col_wrap=facet_col_wrap,
+        height=height, facet_col='Variables', facet_col_wrap=facet_col_wrap,
     )
     gantt.update_layout(
         clickmode='event+select',

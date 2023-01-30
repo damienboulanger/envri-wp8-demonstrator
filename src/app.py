@@ -25,7 +25,6 @@ from utils import charts
 # Provides a version of Dash application which can be run in Jupyter notebook/lab
 # See: https://github.com/plotly/jupyter-dash
 from jupyter_dash import JupyterDash
-from _ast import If
 
 # Configuration of the app
 # For the usual Dash app, see: https://dash.plotly.com/devtools#configuring-with-run_server
@@ -46,6 +45,7 @@ APP_TABS_ID = 'app-tabs'    # see: https://dash.plotly.com/dash-core-components/
 DESCRIPTION_DATASETS_TAB_VALUE = 'description-datasets-tab'    
 SEARCH_DATASETS_TAB_VALUE = 'search-datasets-tab'
 SELECT_DATASETS_TAB_VALUE = 'select-datasets-tab'
+SELECT_DATASETS_INFOTAB_ID = 'select_datasets-infotab'
 PLOT_DATASETS_TAB_VALUE = 'plot-datasets-tab'
 COLOCATION_TAB_VALUE = 'colocation-tab'
 
@@ -127,7 +127,7 @@ def get_description_table():
                 html.Span(") is also available through this service."), 
             ]),
         ]), 
-        html.Td("ACTRIS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
+        html.Td("ACTRIS data are licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row2 = html.Tr([
         html.Td(
             html.A(
@@ -149,7 +149,7 @@ def get_description_table():
                     ),
             ]),
         ]), 
-        html.Td("IAGOS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
+        html.Td("IAGOS data are licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row3 = html.Tr([
         html.Th(
             html.A(
@@ -164,7 +164,7 @@ def get_description_table():
             html.Div("The collection used contains the final quality controlled hourly averaged data for the mole fractions of CO2, CH4, N2O, CO and meteorological observations measured at the relevant vertical levels of the measurements stations."),
             html.Div("All stations follow the ICOS Atmospheric Station specification V2.0 (doi:10.18160/GK28-218) and are certified as ICOS atmospheric stations Class I or II. Data processing has been performed as described in Hazan et al., 2016"),            
         ]), 
-        html.Td("ICOS data is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
+        html.Td("ICOS data are licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).")])
     row4 = html.Tr([
         html.Td(
             html.A(
@@ -274,8 +274,8 @@ def get_dashboard_layout():
 
     select_datasets_tab = dcc.Tab(label='Select datasets', value=SELECT_DATASETS_TAB_VALUE,
                                   children=html.Div(style={'margin': '20px'}, children=[
-        html.Div(id='select-datasets-left-panel-div', className='four columns', children=[
-            html.Div(id='select-datasets-left-left-subpanel-div', className='nine columns', children=
+        html.Div(id='select-datasets-left-panel-div', className='twelve columns', children=[
+            html.Div(id='select-datasets-left-left-subpanel-div', className='two columns', children=
                 dbc.RadioItems(
                     id=GANTT_VIEW_RADIO_ID,
                     options=[
@@ -283,12 +283,34 @@ def get_dashboard_layout():
                         {'label': 'detailed view', 'value': 'detailed'},
                     ],
                     value='compact',
-                    inline=True)),
-            html.Div(id='select-datasets-left-right-subpanel-div', className='three columns', children=
+                    inline=True)
+            ),
+            html.Div(id='select-datasets-left-right-subpanel-div', className='two columns', children=
                 dbc.Button(id=SELECT_DATASETS_BUTTON_ID, n_clicks=0,
                        color='primary', type='submit',
                        style={'font-weight': 'bold'},
-                       children='Select datasets'))
+                       children='Select datasets'),
+            ),
+            html.Div(id='select-datasets-info-div', className='five columns', children=[
+               html.P('Click on Shift for grouped selection of the stations on the chart.'),
+               html.P('Double click to select all stations on the chart.'),
+               html.P('Please select one to three datasets in the table and click to select to go to vizualisation.'),
+               ]
+            ),
+            html.Div(id='select-datasets-variables-div', className='three columns', children=[
+        dash_table.DataTable(
+            id=SELECT_DATASETS_INFOTAB_ID,
+            sort_action='native',
+            style_data={
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'lineHeight': '15px'
+            },
+            style_cell={'textAlign': 'left'},
+            markdown_options={'html': True},
+        ),
+               ]
+            ),
         ]),
         html.Div(id='select-datasets-right-panel-div', className='eight columns', children=None),
         html.Div(id='select-datasets-main-panel-div', className='twelve columns', children=[
@@ -511,7 +533,7 @@ def change_tab(
             datasets_df_filtered = datasets_df_filtered.reset_index(drop=True)
             datasets_df_filtered['id'] = datasets_df_filtered.index
         
-            new_active_tab = SELECT_DATASETS_TAB_VALUE if n_clicks_search > 0 else SEARCH_DATASETS_TAB_VALUE  # TODO: is it a right way?
+            new_active_tab = SELECT_DATASETS_TAB_VALUE if n_clicks_search > 0 else SEARCH_DATASETS_TAB_VALUE
             return datasets_df_filtered.to_json(orient='split', date_format='iso'), new_active_tab, "", 0, 0, False
         
         if trigger == SELECT_DATASETS_BUTTON_ID:
@@ -525,7 +547,6 @@ def change_tab(
 @app.callback(
     Output(TIMESERIES_GRAPH_ID, 'figure'),
     Output("loading-output-2", "children"),
-    #Output(DATASETS_PLOTTING_STORE_ID, 'data'),
     Output(TIMESERIES_GRAPH_INFOTAB_ID, 'columns'),
     Output(TIMESERIES_GRAPH_INFOTAB_ID, 'data'),
     Input(DATASETS_STORE_ID, 'data'),
@@ -538,14 +559,15 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
     if datasets_json is None or not selected_row_ids or tab_id != PLOT_DATASETS_TAB_VALUE:
         raise PreventUpdate
 
-    titles_ids=["dataset", "ri", "station", "stationcode", "legend"] #, "status"
-    titles=["Dataset", "RI", "Station", "Station code", "Legend"] #, "Loading status"
+    titles_ids=["dataset", "ri", "station", "stationcode", "ecv", "legend"] #, "status"
+    titles=["Dataset", "RI", "Station", "Station code", "Essential Climate Variables", "Legend"] #, "Loading status"
     table_columns = [{'name': name, 'id': i} for name, i in zip(titles, titles_ids)]
     table_columns.append({'name': "Download link", 'id': "link", 'presentation': 'markdown'})
     table_data=[]
     datasets=[]
     #figure = go.Figure()
     datasets_df = pd.read_json(datasets_json, orient='split', convert_dates=['time_period_start', 'time_period_end'])
+    datasets_df = datasets_df.join(station_by_shortnameRI['station_fullname'], on='platform_id_RI')  # column 'station_fullname' joined to datasets_df
     axes=[]
     i = 0
     dfs={}
@@ -571,9 +593,10 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
             else:    
                 if len(ds_vars) > 0:
                     for v in ds_vars:
-                        da = ds[v]
-                        units=da.attrs['units'] if 'units' in da.attrs else "no units"
-                        dfs[v + ' (' + str(i) + ') - ' + units] = ds[v].to_series()
+                        if v not in ['station_id', 'latitude', 'longitude']:
+                            da = ds[v]
+                            units=da.attrs['units'] if 'units' in da.attrs else "no units"
+                            dfs[v + ' (' + str(i) + ') - ' + units] = ds[v].to_series()
             
         datasets.append(dd)
     figure=charts.multi_line(dfs)
@@ -594,13 +617,15 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
                     link = [d for d in dd['info']['url'] if d['type'] == 'opendap']
             if len(link) == 1:
                 link = link[0]['url']
-        print(dd['info'])
+        if link.startswith("vp_"):
+            link = "https://iagos.aeris-data.fr/catalogue/"
         table_data.append({
             "id": i, 
             "dataset": dd['info']['title'], 
             "ri": dd['info']['RI'], 
-            "station": dd['info']['platform_name'], 
-            "stationcode": dd['info']['platform_id'], 
+            "station": dd['info']['station_fullname'], 
+            "stationcode": dd['info']['platform_id'],
+            "ecv": ', '.join(dd['info']['ecv_variables_filtered']), 
             #"status":  "Loading ok" if dd['loaded'] else "dataset coulnd't be loaded", 
             "legend":  "("+str(i)+")" if dd['loaded'] else "", 
             "link": "<a href='"+link+"' target='_blank'>"+link+"</a>"    
@@ -612,6 +637,8 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
 @app.callback(
     Output(GANTT_GRAPH_ID, 'figure'),
     Output(GANTT_GRAPH_ID, 'selectedData'),
+    Output(SELECT_DATASETS_INFOTAB_ID, 'columns'),
+    Output(SELECT_DATASETS_INFOTAB_ID, 'data'),
     Input(GANTT_VIEW_RADIO_ID, 'value'),
     Input(DATASETS_STORE_ID, 'data'),
     State(APP_TABS_ID, 'value'),
@@ -619,12 +646,41 @@ def get_timeseries_figure(datasets_json, selected_variables, selected_row_ids, t
 def get_gantt_figure(gantt_view_type, datasets_json, tab_id):
     trigger = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
 
+    titles_ids=["code", "name"] #, "status"
+    titles=["Code", "Variable"] #, "Loading status"
+    table_columns = [{'name': name, 'id': i} for name, i in zip(titles, titles_ids)]
+    table_data=[]
+
+
     if datasets_json is None or tab_id == PLOT_DATASETS_TAB_VALUE:
         raise PreventUpdate
 
     selectedData = {'points': []}
     datasets_df = pd.read_json(datasets_json, orient='split', convert_dates=['time_period_start', 'time_period_end'])
     datasets_df = datasets_df.join(station_by_shortnameRI['station_fullname'], on='platform_id_RI')  # column 'station_fullname' joined to datasets_df
+
+    try:
+        df_unique = datasets_df.loc[datasets_df.astype(str).drop_duplicates(subset = "ecv_variables").index] 
+    except Exception as err:
+        print(err)
+    var_legend={}
+    k=0
+    while k < len(df_unique.index):
+        code=df_unique.iloc[k]['var_codes_filtered'].split(", ")
+        ecv=df_unique.iloc[k]['ecv_variables']
+        j=0
+        for vl in code:
+            var_legend[vl] = ecv[j]
+            j=j+1
+        k=k+1
+    i = 1
+    for var in var_legend.keys():
+        table_data.append({
+                "id": i, 
+                "code": var, 
+                "name": var_legend[var], 
+        })
+        i=i+1
 
     if len(datasets_df) == 0:
        return {}, selectedData   
@@ -637,7 +693,7 @@ def get_gantt_figure(gantt_view_type, datasets_json, tab_id):
         selectedpoints=[],
         unselected={'marker': {'opacity': 0.4}, }
     )
-    return fig, selectedData
+    return fig, selectedData, table_columns, table_data
 
 @app.callback(
     Output(DATASETS_TABLE_ID, 'columns'),
