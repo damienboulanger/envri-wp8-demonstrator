@@ -89,7 +89,7 @@ def get_sios_info():
                           'date_end': data['temporal_extent_end_date'],
                           #'keywords' : [element.strip() for element in data['keywords_keyword'].split(',') if element.strip() in MAPPING_ECV_VARIABLES_METNO.keys()],
                           'keywords' : [element.strip() for element in data['keywords_keyword'].split(',') if element.strip() in MAPPING_ECV_VARIABLES_METNO.keys()] if data['keywords_keyword'] != '' else ['surface_air_pressure', 'air_temperature', 'wind_from_direction', 'wind_speed', 'relative_humidity'],
-                          'urls': [{'url' : 'https://sios-svalbard.org/metsis/metadata/'+data['metadata_identifier'], 'type': 'landing_page'},
+                          'urls': [{'url' : 'https://sios-svalbard.org/metsis/metadata/'+data['metadata_identifier'].replace('no.met.adc:','no-met-adc-'), 'type': 'landing_page'},
                                    {'url' : data['data_access_url_opendap'], 'type' : 'opendap'},
                                    {'url' : data['data_access_url_http'], 'type' : 'data_file'}]
                          })
